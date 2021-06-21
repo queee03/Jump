@@ -6,6 +6,8 @@ import path from "path";
 export default defineConfig({
   plugins: [reactRefresh()],
   resolve: {
-    alias: [{ find: "@", replacement: "/src" }],
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
 });
