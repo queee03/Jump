@@ -33,7 +33,7 @@ function App() {
     animate();
   }, []);
 
-  return <div ref={ref}>1</div>;
+  return <div ref={ref}></div>;
 }
 
 export default App;

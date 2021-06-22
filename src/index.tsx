@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { Demo } from "@/components";
-import Main from "@/pages/main";
+import Main from "@/pages/Main";
 
 ReactDOM.render(
   <React.StrictMode>
