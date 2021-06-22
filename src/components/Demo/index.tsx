@@ -42,13 +42,12 @@ function App() {
   // 坐标系
   const axes = new AxesHelper(300);
 
+  // 实例化
   const tr1 = triangle("#c04851");
   const tr2 = triangle("#eea2a4");
-
   // tr1.position.x = 6;
   // tr1.position.y = 6;
   tr1.position.z = -40;
-
   // tr2.position.x = -10;
   // tr2.position.y = -10;
   tr2.position.z = 10;
