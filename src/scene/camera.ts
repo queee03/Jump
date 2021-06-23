@@ -1,23 +1,18 @@
-import { OrthographicCamera, Vector3 } from "three";
+import * as Three from "three";
 import sceneConfs from "@/confs/scene";
 
 export type CameraType = {
-  instance: OrthographicCamera | null;
-  target: Vector3 | null;
-  init: () => void;
+  instance: Three.OrthographicCamera;
+  target: Three.Vector3;
 };
 
 class Camera implements CameraType {
-  instance: OrthographicCamera | null;
-  target: Vector3 | null;
+  instance: Three.OrthographicCamera;
+  target: Three.Vector3;
   constructor() {
-    this.instance = null;
-    this.target = null;
-  }
-  init() {
     const aspect = sceneConfs.height / sceneConfs.width;
     const frustumSize = sceneConfs.frustumSize;
-    this.instance = new OrthographicCamera(
+    this.instance = new Three.OrthographicCamera(
       -frustumSize,
       frustumSize,
       frustumSize * aspect,
@@ -27,7 +22,7 @@ class Camera implements CameraType {
     );
 
     this.instance.position.set(-10, 10, 10);
-    this.target = new Vector3(0, 0, 0);
+    this.target = new Three.Vector3(0, 0, 0);
     this.instance.lookAt(this.target);
   }
 }
