@@ -13,7 +13,7 @@ class Cuboid extends BaseBlock implements CuboidType {
   x: number;
   y: number;
   z: number;
-  constructor(x: number, y: number, z: number, width: number) {
+  constructor(x: number, y: number, z: number, width?: number) {
     super("cuboid");
     const size = width || this.width;
     const geometry = new Three.BoxGeometry(size, this.height, size);

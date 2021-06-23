@@ -13,7 +13,7 @@ class Cylinder extends BaseBlock implements CylinderType {
   x: number;
   y: number;
   z: number;
-  constructor(x: number, y: number, z: number, width: number) {
+  constructor(x: number, y: number, z: number, width?: number) {
     super("cylinder");
     const size = width || this.width;
     const geometry = new Three.CylinderGeometry(
