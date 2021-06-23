@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Scene } from "@/scene/index";
+import { Scene } from "@/unit/scene/index";
 
 function App() {
   const ref = useRef<HTMLDivElement>(null);

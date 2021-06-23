@@ -3,7 +3,15 @@ import Camera from "./camera";
 import type { CameraType } from "./camera";
 import sceneConfs from "@/confs/scene";
 
-class Scene {
+export type SceneType = {
+  instance: Three.Scene;
+  camera: CameraType;
+  renderer: Three.WebGLRenderer;
+  axesHelper: Three.AxesHelper;
+  render: () => void;
+};
+
+class Scene implements SceneType {
   instance: Three.Scene;
   camera: CameraType;
   renderer: Three.WebGLRenderer;
