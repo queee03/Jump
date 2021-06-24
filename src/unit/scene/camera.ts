@@ -1,5 +1,5 @@
 import * as Three from "three";
-import sceneConfs from "@/confs/scene";
+import sceneConf from "@/confs/scene";
 
 export type CameraType = {
   instance: Three.OrthographicCamera;
@@ -7,11 +7,11 @@ export type CameraType = {
 };
 
 class Camera implements CameraType {
-  instance: Three.OrthographicCamera;
-  target: Three.Vector3;
+  instance;
+  target;
   constructor() {
-    const aspect = sceneConfs.height / sceneConfs.width;
-    const frustumSize = sceneConfs.frustumSize;
+    const aspect = sceneConf.height / sceneConf.width;
+    const frustumSize = sceneConf.frustumSize;
     this.instance = new Three.OrthographicCamera(
       -frustumSize,
       frustumSize,

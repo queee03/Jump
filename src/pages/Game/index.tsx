@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Scene } from "@/unit/scene/index";
 import Ground from "@/unit/objects/ground";
+// import Background from "@/unit/objects/background";
 import Cuboid from "@/unit/block/cuboid";
 import Cylinder from "@/unit/block/cylinder";
 
@@ -19,6 +20,8 @@ function Page() {
   const addGround = () => {
     const ground = new Ground();
     scene.instance.add(ground.instance);
+    // const background = new Background();
+    // scene.instance.add(background.instance);
   };
 
   const animate = () => {

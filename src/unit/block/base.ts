@@ -1,4 +1,4 @@
-import blockConfs from "@/confs/block";
+import blockConf from "@/confs/block";
 
 type typeEnum = "cuboid" | "cylinder";
 export type BaseBlockType = {
@@ -13,8 +13,8 @@ class BaseBlock implements BaseBlockType {
   width: number;
   constructor(type: typeEnum) {
     this.type = type;
-    this.height = blockConfs.height;
-    this.width = blockConfs.width;
+    this.height = blockConf.height;
+    this.width = blockConf.width;
   }
 }
 export default BaseBlock;

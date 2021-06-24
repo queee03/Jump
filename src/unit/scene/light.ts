@@ -11,7 +11,7 @@ export type LightType = {
 
 class Light implements LightType {
   instances: Record<string, lightInstanceType> = {};
-  shadowTarget: Three.Mesh;
+  shadowTarget;
   constructor() {
     const ambientLight = new Three.AmbientLight("#fff", 0.8);
     const shadowLight = new Three.DirectionalLight("#f5f5f5", 0.3);
