@@ -1,5 +1,4 @@
 import * as Three from "three";
-import sceneConfs from "@/confs/scene";
 
 type lightInstanceType =
   | Three.AmbientLight
@@ -14,29 +13,16 @@ class Light implements LightType {
   instances: Record<string, lightInstanceType> = {};
   shadowTarget: Three.Mesh;
   constructor() {
-    const ambientLight = new Three.AmbientLight(
-      sceneConfs.ambientLight.color,
-      sceneConfs.ambientLight.opacity
-    );
-    const shadowLight = new Three.DirectionalLight(
-      sceneConfs.shadowLight.color,
-      sceneConfs.shadowLight.opacity
-    );
+    const ambientLight = new Three.AmbientLight("#fff", 0.8);
+    const shadowLight = new Three.DirectionalLight("#f5f5f5", 0.3);
     // 设置一个不可见的shadowTarget
     const shadowTarget = new Three.Mesh(
-      new Three.PlaneGeometry(
-        sceneConfs.shadowTarget.width,
-        sceneConfs.shadowTarget.height
-      ),
-      new Three.MeshBasicMaterial({ color: sceneConfs.shadowTarget.color })
+      new Three.PlaneGeometry(0.1, 0.1),
+      new Three.MeshBasicMaterial({ color: "#fff" })
     );
     shadowTarget.visible = false;
-    shadowTarget.name = sceneConfs.shadowTarget.name;
-    shadowLight.position.set(
-      sceneConfs.shadowLight.positions.x,
-      sceneConfs.shadowLight.positions.y,
-      sceneConfs.shadowLight.positions.z
-    );
+    shadowTarget.name = "shadowTarget";
+    shadowLight.position.set(10, 30, 20);
     shadowLight.target = shadowTarget;
 
     this.instances.ambientLight = ambientLight;
