@@ -9,8 +9,8 @@ export type SceneType = {
   instance: Three.Scene;
   camera: CameraType;
   light: LightType;
-  renderer: Three.WebGLRenderer;
   axesHelper: Three.AxesHelper;
+  renderer: Three.WebGLRenderer;
   render: () => void;
 };
 
@@ -18,8 +18,8 @@ class Scene implements SceneType {
   instance: Three.Scene;
   camera: CameraType;
   light: LightType;
-  renderer: Three.WebGLRenderer;
   axesHelper: Three.AxesHelper;
+  renderer: Three.WebGLRenderer;
   constructor() {
     // define
     this.renderer = new Three.WebGLRenderer({

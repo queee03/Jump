@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Scene } from "@/unit/scene/index";
+import Ground from "@/unit/objects/ground";
 import Cuboid from "@/unit/block/cuboid";
 import Cylinder from "@/unit/block/cylinder";
 
@@ -15,6 +16,11 @@ function Page() {
     scene.instance.add(cylinderBlock.instance);
   };
 
+  const addGround = () => {
+    const ground = new Ground();
+    scene.instance.add(ground.instance);
+  };
+
   const animate = () => {
     scene.render();
     requestAnimationFrame(animate);
@@ -23,6 +29,7 @@ function Page() {
   useEffect(() => {
     if (ref.current) ref.current.appendChild(renderer.domElement);
     addInitBlock();
+    addGround();
     animate();
   }, []);
 
