@@ -22,7 +22,7 @@ class Cylinder extends BaseBlock implements CylinderType {
       this.height,
       120
     );
-    const meterial = new Three.MeshBasicMaterial({ color: "#fff" });
+    const meterial = new Three.MeshPhongMaterial({ color: "#fff" });
     this.instance = new Three.Mesh(geometry, meterial);
     this.instance.name = "block"; // 为了后续重新渲染等操作
     this.instance.position.x = this.x = x;

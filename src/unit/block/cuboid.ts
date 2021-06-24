@@ -17,7 +17,7 @@ class Cuboid extends BaseBlock implements CuboidType {
     super("cuboid");
     const size = width || this.width;
     const geometry = new Three.BoxGeometry(size, this.height, size);
-    const meterial = new Three.MeshBasicMaterial({ color: "#fff" });
+    const meterial = new Three.MeshPhongMaterial({ color: "#fff" });
     this.instance = new Three.Mesh(geometry, meterial);
     this.instance.name = "block"; // 为了后续重新渲染等操作
     this.instance.position.x = this.x = x;
