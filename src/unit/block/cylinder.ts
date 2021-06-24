@@ -28,6 +28,8 @@ class Cylinder extends BaseBlock implements CylinderType {
     this.instance.position.x = this.x = x;
     this.instance.position.y = this.y = y;
     this.instance.position.z = this.z = z;
+    this.instance.receiveShadow = true;
+    this.instance.castShadow = true;
   }
 }
 

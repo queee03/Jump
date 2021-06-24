@@ -1,5 +1,6 @@
 import * as Three from "three";
 import blockConf from "@/confs/block";
+import sceneConf from "@/confs/scene";
 
 export type GroundType = {
   instance: Three.Mesh;
@@ -17,7 +18,8 @@ class Ground implements GroundType {
 
     this.instance = new Three.Mesh(geometry, material);
     this.instance.rotation.x = -Math.PI / 2;
-    this.instance.position.y = -blockConf.height;
+    this.instance.position.y = -blockConf.height / 2;
+    this.instance.receiveShadow = true;
   }
 }
 

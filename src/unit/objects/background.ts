@@ -1,6 +1,5 @@
 import * as Three from "three";
 import sceneConf from "@/confs/scene";
-import blockConf from "@/confs/block";
 
 export type BackgroundType = {
   instance: Three.Mesh;

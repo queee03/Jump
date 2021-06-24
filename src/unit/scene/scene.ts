@@ -31,6 +31,9 @@ class Scene implements SceneType {
       preserveDrawingBuffer: true, // 保留缓冲区数据
     });
     this.renderer.setSize(sceneConf.width, sceneConf.height);
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = Three.PCFShadowMap;
+
     this.instance = new Three.Scene();
     this.camera = new Camera();
     this.light = new Light();
@@ -42,7 +45,11 @@ class Scene implements SceneType {
     for (let key in this.light.instances) {
       this.instance.add(this.light.instances[key]);
     }
-    this.camera.instance.add(this.background.instance); // 注意：是往camera中add ?为什么跟ground不一样
+    this.camera.instance.add(this.background.instance); // 注意：是往 camera 中 add, 被添加的单元会以 camera 的坐标系为准 (相对 scene 是斜面)
+    /* ?为什么 background 跟 ground 添加的方式不一样? 
+        因为 ground 相当于地面,需要用于投射阴影,所以必须把它放在场景中,相对场景中的物体平行
+        而此处的 background 跟物体并无实际交互,只需要相对 camera 的角度平行即可
+    */
   }
   render() {
     this.renderer.render(this.instance, this.camera.instance);
