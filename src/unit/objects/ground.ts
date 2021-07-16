@@ -1,6 +1,6 @@
 import * as Three from "three";
 import blockConf from "@/confs/block";
-import sceneConf from "@/confs/scene";
+// import sceneConf from "@/confs/scene";
 
 export type GroundType = {
   instance: Three.Mesh;

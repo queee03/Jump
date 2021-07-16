@@ -4,6 +4,7 @@ import Ground from "@/unit/objects/ground";
 // import Background from "@/unit/objects/background";
 import Cuboid from "@/unit/block/cuboid";
 import Cylinder from "@/unit/block/cylinder";
+import blockConf from "@/confs/block";
 
 function Page() {
   const ref = useRef<HTMLDivElement>(null);
@@ -11,7 +12,12 @@ function Page() {
   const renderer = scene.renderer;
 
   const addInitBlock = () => {
-    const cuboidBlock = new Cuboid(-15, 0, 0);
+    const { initPosition } = blockConf;
+    const cuboidBlock = new Cuboid(
+      initPosition.x,
+      initPosition.y,
+      initPosition.z
+    );
     const cylinderBlock = new Cylinder(23, 0, 0);
     scene.instance.add(cuboidBlock.instance);
     scene.instance.add(cylinderBlock.instance);
