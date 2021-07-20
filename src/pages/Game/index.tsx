@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Scene } from "@/unit/scene/index";
 import Ground from "@/unit/objects/ground";
-// import Background from "@/unit/objects/background";
+import Bottle from "@/unit/objects/bottle";
 import Cuboid from "@/unit/block/cuboid";
 import Cylinder from "@/unit/block/cylinder";
 import blockConf from "@/confs/block";
@@ -30,6 +30,11 @@ function Page() {
     // scene.instance.add(background.instance);
   };
 
+  const addBottle = () => {
+    const bottle = new Bottle();
+    scene.instance.add(bottle.obj);
+  };
+
   const animate = () => {
     scene.render();
     requestAnimationFrame(animate);
@@ -39,6 +44,7 @@ function Page() {
     if (ref.current) ref.current.appendChild(renderer.domElement);
     addInitBlock();
     addGround();
+    addBottle();
     animate();
   }, []);
 
