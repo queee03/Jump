@@ -10,7 +10,7 @@ const bodyTopH = height * 0.1;
 const bodyMiddleH = height * 0.1;
 const bodyBottomH = height * 0.4;
 const span = height * 0.06; // 头部与身体的间隙
-const radius = headH / 2; // radius为半径
+const radius = headH / 2; // 核心半径 因为头部宽高相等，所以用头部高度作为核心直径
 
 export default {
   name: "bottle",
@@ -28,7 +28,7 @@ export default {
   bodyTop: {
     // 实际高度：bodyTopH * 2
     // 但由于本身这个椭圆需要隐藏一半高度 所以实际视觉效果高度就是 bodyTopH
-    radius: radius, // radius为半径
+    radius: radius,
     scaleY: bodyTopH / radius, // radius * scaleY = bodyTopH * 2
     segments,
     positionY: bodyBottomH + bodyMiddleH,
