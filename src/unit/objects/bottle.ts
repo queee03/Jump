@@ -18,8 +18,7 @@ class Bottle implements BottleType {
     const {
       name,
       initPosition,
-      headRadius,
-      headRPositionY,
+      head,
       bodyBottom,
       bodyMiddle,
       bodyTop,
@@ -33,15 +32,16 @@ class Bottle implements BottleType {
     const basicMaterial = new Three.MeshPhongMaterial({ color: materialColor });
     this.bottle = new Three.Object3D();
 
+    // 头部
     this.head = new Three.Mesh(
-      new Three.OctahedronGeometry(headRadius),
+      new Three.OctahedronGeometry(head.radius),
       basicMaterial
     );
-    this.head.position.y = headRPositionY;
+    this.head.position.y = head.positionY;
     this.head.castShadow = true;
 
+    // 身体
     this.body = new Three.Object3D();
-
     const bodyBottomMesh = new Three.Mesh(
       new Three.CylinderGeometry(
         bodyBottom.topRadius,
@@ -51,6 +51,7 @@ class Bottle implements BottleType {
       ),
       basicMaterial
     );
+    bodyBottomMesh.position.y = bodyBottom.positionY;
     bodyBottomMesh.castShadow = true;
 
     const bodyMiddleMesh = new Three.Mesh(
@@ -79,6 +80,7 @@ class Bottle implements BottleType {
     this.body.add(bodyMiddleMesh);
     this.body.add(bodyTopMesh);
 
+    // 接入
     this.bottle.add(this.head);
     this.bottle.add(this.body);
     this.obj.add(this.bottle);
