@@ -1,6 +1,6 @@
 import blockConf from "./block";
 
-const height = 10; // 总高度 改变此数值则可按比例缩放
+const height = 11; // 总高度 改变此数值则可按比例缩放
 
 const positionY = 0;
 const segments = 20;
@@ -10,7 +10,7 @@ const bodyTopH = height * 0.1;
 const bodyMiddleH = height * 0.1;
 const bodyBottomH = height * 0.4;
 const span = height * 0.06; // 头部与身体的间隙
-const radius = headH / 2; // 核心半径 因为头部宽高相等，所以用头部高度作为核心直径
+const radius = (headH * 0.8) / 2; // 核心半径 因为头部宽高相等，所以用头部高度作为核心直径
 
 export default {
   name: "bottle",
@@ -22,7 +22,7 @@ export default {
   },
   head: {
     // 实际高度：headH
-    radius: radius,
+    radius: headH / 2,
     positionY: bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2,
   },
   bodyTop: {
@@ -43,7 +43,7 @@ export default {
   bodyBottom: {
     height: bodyBottomH,
     topRadius: radius * 0.9,
-    bottomRadius: radius * 1.35,
+    bottomRadius: radius * 1.2,
     positionY: bodyBottomH / 2,
     segments,
   },
