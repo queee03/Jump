@@ -13,14 +13,13 @@ const span = height * 0.06; // 头部与身体的间隙
 const radius = headH / 2; // radius为半径
 
 export default {
-  that: this,
   name: "bottle",
+  materialColor: "#800080",
   initPosition: {
     x: -15,
     y: blockConf.height / 2 + positionY,
     z: 0,
   },
-  materialColor: "#800080",
   head: {
     // 实际高度：headH
     radius: radius,
