@@ -10,6 +10,7 @@ class Camera implements CameraType {
   instance;
   target;
   constructor() {
+    const { cameraPosition } = sceneConf;
     const aspect = sceneConf.height / sceneConf.width;
     const frustumSize = sceneConf.frustumSize;
     this.instance = new Three.OrthographicCamera(
@@ -22,7 +23,11 @@ class Camera implements CameraType {
     );
 
     // this.instance.position.set(-10, 10, 10);
-    this.instance.position.set(0, 0, 10);
+    this.instance.position.set(
+      cameraPosition.x,
+      cameraPosition.y,
+      cameraPosition.z
+    );
     this.target = new Three.Vector3(0, 0, 0);
     this.instance.lookAt(this.target);
   }

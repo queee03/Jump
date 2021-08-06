@@ -43,7 +43,7 @@ export default {
   bodyBottom: {
     height: bodyBottomH,
     topRadius: radius * 0.9,
-    bottomRadius: radius * 1.5,
+    bottomRadius: radius * 1.35,
     positionY: bodyBottomH / 2,
     segments,
   },
