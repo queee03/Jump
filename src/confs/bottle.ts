@@ -1,5 +1,10 @@
 import blockConf from "./block";
 
+import headImg from "@/assets/images/head.png";
+// import topImg from "@/assets/images/top.png";
+import middleImg from "@/assets/images/top.png";
+import bottomImg from "@/assets/images/bottom.png";
+
 const height = 11; // 总高度 改变此数值则可按比例缩放
 
 const positionY = 0;
@@ -19,6 +24,11 @@ export default {
     x: -15,
     y: blockConf.height / 2 + positionY,
     z: 0,
+  },
+  texture: {
+    specular: headImg,
+    middle: middleImg,
+    bottom: bottomImg,
   },
   head: {
     // 实际高度：headH

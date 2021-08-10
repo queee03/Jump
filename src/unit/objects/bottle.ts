@@ -1,11 +1,6 @@
 import * as Three from "three";
 import bottleConf from "@/confs/bottle";
 
-import headImg from "@/assets/images/head.png";
-// import topImg from "@/assets/images/top.png";
-import middleImg from "@/assets/images/top.png";
-import bottomImg from "@/assets/images/bottom.png";
-
 export type BottleType = {
   obj: Three.Object3D;
   bottle: Three.Object3D;
@@ -36,10 +31,11 @@ class Bottle implements BottleType {
   }
 
   initTexture() {
+    const { texture } = bottleConf;
     const loader = new Three.TextureLoader();
-    const specularTexture = loader.load(headImg);
-    const middleTexture = loader.load(middleImg);
-    const bottomTexture = loader.load(bottomImg);
+    const specularTexture = loader.load(texture.specular);
+    const middleTexture = loader.load(texture.middle);
+    const bottomTexture = loader.load(texture.bottom);
     Bottle.specularMaterial = new Three.MeshPhongMaterial({
       map: specularTexture,
     });
