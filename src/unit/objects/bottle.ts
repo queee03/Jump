@@ -9,59 +9,70 @@ import bottomImg from "@/assets/images/bottom.png";
 export type BottleType = {
   obj: Three.Object3D;
   bottle: Three.Object3D;
-  head: Three.Mesh;
+  head: Three.Object3D;
   body: Three.Object3D;
 };
 
 class Bottle implements BottleType {
   obj: Three.Object3D;
   bottle: Three.Object3D;
-  head: Three.Mesh;
+  head: Three.Object3D;
   body: Three.Object3D;
-  constructor() {
-    const {
-      name,
-      initPosition,
-      head,
-      bodyBottom,
-      bodyMiddle,
-      bodyTop,
-      materialColor,
-    } = bottleConf;
+  static specularMaterial: Three.MeshPhongMaterial;
+  static middleMaterial: Three.MeshPhongMaterial;
+  static bottomMaterial: Three.MeshPhongMaterial;
 
-    // 定义纹理
+  constructor() {
+    this.obj = new Three.Object3D();
+    this.bottle = new Three.Object3D();
+    this.head = new Three.Object3D();
+    this.body = new Three.Object3D();
+
+    this.initTexture();
+    this.initObj();
+    this.initHead();
+    this.initBody();
+    this.init();
+  }
+
+  initTexture() {
     const loader = new Three.TextureLoader();
     const specularTexture = loader.load(headImg);
     const middleTexture = loader.load(middleImg);
     const bottomTexture = loader.load(bottomImg);
-    // const basicMaterial = new Three.MeshPhongMaterial({ color: materialColor });
-    const specularMaterial = new Three.MeshPhongMaterial({
+    Bottle.specularMaterial = new Three.MeshPhongMaterial({
       map: specularTexture,
     });
-    const middleMaterial = new Three.MeshPhongMaterial({
+    Bottle.middleMaterial = new Three.MeshPhongMaterial({
       map: middleTexture,
     });
-    const bottomMaterial = new Three.MeshPhongMaterial({
+    Bottle.bottomMaterial = new Three.MeshPhongMaterial({
       map: bottomTexture,
     });
+  }
 
-    // 定义载体
-    this.obj = new Three.Object3D();
+  initObj() {
+    const {
+      name,
+      initPosition: { x, y, z },
+    } = bottleConf;
     this.obj.name = name;
-    this.obj.position.set(initPosition.x, initPosition.y, initPosition.z);
+    this.obj.position.set(x, y, z);
+  }
 
-    this.bottle = new Three.Object3D();
-
-    // 头部
-    this.head = new Three.Mesh(
-      new Three.OctahedronGeometry(head.radius),
-      specularMaterial
+  initHead() {
+    const { radius, positionY } = bottleConf.head;
+    const head = new Three.Mesh(
+      new Three.OctahedronGeometry(radius),
+      Bottle.specularMaterial
     );
-    this.head.position.y = head.positionY;
-    this.head.castShadow = true;
+    head.position.y = positionY;
+    head.castShadow = true;
+    this.head.add(head);
+  }
 
-    // 身体
-    this.body = new Three.Object3D();
+  initBody() {
+    const { bodyBottom, bodyMiddle, bodyTop } = bottleConf;
 
     const bodyTopGrometry = new Three.SphereGeometry(
       bodyTop.radius,
@@ -69,7 +80,10 @@ class Bottle implements BottleType {
       bodyTop.segments
     );
     bodyTopGrometry.scale(1, bodyTop.scaleY, 1);
-    const bodyTopMesh = new Three.Mesh(bodyTopGrometry, specularMaterial);
+    const bodyTopMesh = new Three.Mesh(
+      bodyTopGrometry,
+      Bottle.specularMaterial
+    );
     bodyTopMesh.position.y = bodyTop.positionY;
     bodyTopMesh.castShadow = true;
 
@@ -80,7 +94,7 @@ class Bottle implements BottleType {
         bodyMiddle.height,
         bodyMiddle.segments
       ),
-      middleMaterial
+      Bottle.middleMaterial
     );
     bodyMiddleMesh.position.y = bodyMiddle.positionY;
     bodyMiddleMesh.castShadow = true;
@@ -92,7 +106,7 @@ class Bottle implements BottleType {
         bodyBottom.height,
         bodyBottom.segments
       ),
-      bottomMaterial
+      Bottle.bottomMaterial
     );
     bodyBottomMesh.position.y = bodyBottom.positionY;
     bodyBottomMesh.castShadow = true;
@@ -100,11 +114,16 @@ class Bottle implements BottleType {
     this.body.add(bodyBottomMesh);
     this.body.add(bodyMiddleMesh);
     this.body.add(bodyTopMesh);
+  }
 
-    // 接入
+  init() {
     this.bottle.add(this.head);
     this.bottle.add(this.body);
     this.obj.add(this.bottle);
+  }
+
+  update() {
+    this.head.rotation.y += 0.06;
   }
 }
 

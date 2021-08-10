@@ -8,7 +8,11 @@ import blockConf from "@/confs/block";
 
 function Page() {
   const ref = useRef<HTMLDivElement>(null);
+  // const sceneRef = useRef<Scene | undefined>();
+  // const bottleRef = useRef<Bottle | undefined>();
+
   const scene = new Scene();
+  const bottle = new Bottle();
   const renderer = scene.renderer;
 
   const addInitBlock = () => {
@@ -31,12 +35,17 @@ function Page() {
   };
 
   const addBottle = () => {
-    const bottle = new Bottle();
+    // bottleRef.current = new Bottle();
     scene.instance.add(bottle.obj);
+  };
+
+  const updateBottle = () => {
+    bottle?.update();
   };
 
   const animate = () => {
     scene.render();
+    updateBottle();
     requestAnimationFrame(animate);
   };
 

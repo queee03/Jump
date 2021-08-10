@@ -24,6 +24,7 @@ export default {
     // 实际高度：headH
     radius: headH / 2,
     positionY: bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2,
+    rotateRate: 0.06,
   },
   bodyTop: {
     // 实际高度：bodyTopH * 2
