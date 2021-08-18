@@ -1,4 +1,5 @@
 import * as Three from "three";
+import customAnimation from "@/libs/animation";
 import bottleConf from "@/confs/bottle";
 
 export type BottleType = {
@@ -120,6 +121,11 @@ class Bottle implements BottleType {
 
   update() {
     this.head.rotation.y += 0.06;
+  }
+
+  showup() {
+    const { startPosition } = bottleConf;
+    customAnimation.to(this.obj.position, startPosition, 0.5);
   }
 }
 

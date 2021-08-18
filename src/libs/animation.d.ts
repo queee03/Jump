@@ -1,22 +1,28 @@
-declare namespace Animation {
+declare namespace Animationt {
   type EasingEnum = Tween.EasingEnum;
 
+  type PositionKeyEnum = "x" | "y" | "z";
+
+  type PositionType = Record<PositionKeyEnum, number>;
+
+  type callbackType = (to?: number, isEnd?: boolean) => void;
+
   type ToType = (
-    duration: unknown,
-    from: unknown,
-    to: unknown,
-    type: unknown
+    from: PositionType,
+    to: PositionType,
+    duration?: number,
+    type?: EasingEnum
   ) => void;
 
   type TweenAnimationType = (
-    from: unknown,
+    from: number,
     to: number,
-    duration: number,
-    type: EasingEnum,
-    callback: (to: number, isEnd?: boolean) => void
+    duration?: number,
+    type?: EasingEnum,
+    callback?: callbackType
   ) => void;
 
   type CustomAnimationType = {
-    to?: ToType;
+    to: ToType;
   };
 }

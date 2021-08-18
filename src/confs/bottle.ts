@@ -7,7 +7,8 @@ import bottomImg from "@/assets/images/bottom.png";
 
 const height = 11; // 总高度 改变此数值则可按比例缩放
 
-const positionY = 0;
+const startPositionY = 0;
+const initPositionY = startPositionY + 30;
 const segments = 20;
 
 const headH = height * 0.34;
@@ -21,8 +22,13 @@ export default {
   name: "bottle",
   materialColor: "#800080",
   initPosition: {
-    x: -15,
-    y: blockConf.height / 2 + positionY,
+    x: blockConf.initPosition.x,
+    y: blockConf.height / 2 + initPositionY,
+    z: 0,
+  },
+  startPosition: {
+    x: blockConf.initPosition.x,
+    y: blockConf.height / 2 + startPositionY,
     z: 0,
   },
   texture: {

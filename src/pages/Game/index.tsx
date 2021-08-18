@@ -55,6 +55,8 @@ function Page() {
     addGround();
     addBottle();
     animate();
+
+    bottle?.showup();
   }, []);
 
   return <div ref={ref}></div>;

@@ -8,60 +8,72 @@
 */
 
 /// <reference path="animation.d.ts"/>
-import A = Animation;
+import A = Animationt;
 import Tween from "./tween";
 
-const frameInterval = 17; // 帧间隔时间ms 对于人眼已经够用
+const fps = 60;
+const frameInterval = 1000 / fps; // 帧间隔时间ms 对于人眼已经够用
 
-const customAnimation: A.CustomAnimationType = {};
-customAnimation.to = function (duration, from, to, type) {};
+const to: A.ToType = function (from, to, duration, type) {
+  const keys = Object.keys(from);
+  keys.forEach((key) => {
+    const prop = <A.PositionKeyEnum>key;
+    // if (prop === "y") // test
+    TweenAnimation(from[prop], to[prop], duration, type, (value) => {
+      if (value || value === 0) from[prop] = value;
+    });
+  });
+};
+const customAnimation: A.CustomAnimationType = { to };
 
-const TweenAnimation: A.TweenAnimationType = function (
+export const TweenAnimation: A.TweenAnimationType = function (
   from,
   to,
-  duration = 300, // second
+  duration = 1, // second
   type = "Linear",
   callback = () => {}
 ) {
   const framaCount = (duration * 1000) / frameInterval; // 帧数
-  let start = -1; // 记录当前帧数，非实际值
-  const startTime = Date.now();
+  let currentFrame = -1; // 记录当前帧数，非实际值
+  // const startTime = Date.now();
   let lastTime = Date.now();
-
   const tween = Tween[type];
 
   // 绘制 调用一次绘制一帧
   const step = function () {
     /* 
-        要求：
-        1. 利用 requestAnimationFrame 
-        2. 按照自定义的时间间隔 frameInterval 绘制动画
-        问题：
-        但 requestAnimationFrame 刷新的时间间隔一般与浏览器的刷新频率相同，并不能自定义，
-        所以要做相应计算以控制
-    */
+          要求：
+          1. 利用 requestAnimationFrame 
+          2. 按照自定义的时间间隔 frameInterval 绘制动画
+          问题：
+          但 requestAnimationFrame 刷新的时间间隔一般与浏览器的刷新频率相同，并不能自定义，
+          所以要做相应计算以控制
+      */
     const currentTime = Date.now();
-    const interval = currentTime - lastTime;
-    lastTime = Date.now();
+    const interval = currentTime - lastTime; // 是不稳定的值 跟浏览器当前状态有关
+    lastTime = currentTime;
+
+    // if (!interval) {
+    //   requestAnimationFrame(step);
+    //   return;
+    // }
 
     /* 
-        如果刷新频率与自定义频率相等或更快，则正常绘制下一帧；
-        如果比自定义频率慢，则需要跳帧
-    */
+          如果刷新频率与自定义频率相等或更快，则正常绘制下一帧；
+          如果比自定义频率慢，则需要跳帧
+      */
     if (interval <= frameInterval) {
-      start++;
+      currentFrame += 1;
     } else {
       // 计算出跳了几帧
-      const _start = Math.floor(interval / frameInterval);
-      start += _start;
+      const jump = Math.floor(interval / frameInterval);
+      currentFrame += jump;
     }
 
-    // const value = tween(start, from, to - from, framaCount);
-    tween();
-
-    if (start <= framaCount) {
+    const value = tween(currentFrame, from, to - from, framaCount);
+    if (currentFrame <= framaCount) {
       // 动画继续
-      // callback(value);
+      callback(value);
       requestAnimationFrame(step);
     } else {
       // 动画结束
