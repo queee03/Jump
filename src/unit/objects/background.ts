@@ -1,5 +1,5 @@
 import * as Three from "three";
-import sceneConf from "@/confs/scene";
+import backgroundConf from "@/confs/background";
 
 export type BackgroundType = {
   instance: Three.Mesh;
@@ -8,17 +8,16 @@ export type BackgroundType = {
 class Background implements BackgroundType {
   instance: Three.Mesh;
   constructor() {
-    const geometry = new Three.PlaneGeometry(
-      sceneConf.frustumSize * 2,
-      (window.innerHeight / window.innerWidth) * sceneConf.frustumSize * 2
-    );
+    const { width, height, color, opacity, position } = backgroundConf;
+
+    const geometry = new Three.PlaneGeometry(width, height);
     const material = new Three.MeshBasicMaterial({
-      color: "#d7dbe6",
-      opacity: 1,
+      color,
+      opacity,
     });
 
     this.instance = new Three.Mesh(geometry, material);
-    this.instance.position.z = -84; // ?
+    this.instance.position.z = position.z;
   }
 }
 

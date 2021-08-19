@@ -25,20 +25,27 @@ class Scene implements SceneType {
   axesHelper;
   renderer;
   constructor() {
-    // define
+    const {
+      width,
+      height,
+      antialias,
+      preserveDrawingBuffer,
+      shadowMap,
+      axesHelperSize,
+    } = sceneConf;
     this.renderer = new Three.WebGLRenderer({
-      antialias: true, // 抗锯齿
-      preserveDrawingBuffer: true, // 保留缓冲区数据
+      antialias,
+      preserveDrawingBuffer,
     });
-    this.renderer.setSize(sceneConf.width, sceneConf.height);
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = Three.PCFShadowMap;
+    this.renderer.setSize(width, height);
+    this.renderer.shadowMap.enabled = shadowMap.enabled;
+    this.renderer.shadowMap.type = shadowMap.type;
 
     this.instance = new Three.Scene();
     this.camera = new Camera();
     this.light = new Light();
     this.background = new Background();
-    this.axesHelper = new Three.AxesHelper(100);
+    this.axesHelper = new Three.AxesHelper(axesHelperSize);
     // add
     this.instance.add(this.axesHelper);
     this.instance.add(this.camera.instance);

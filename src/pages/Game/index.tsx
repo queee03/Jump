@@ -37,6 +37,7 @@ function Page() {
   const addBottle = () => {
     // bottleRef.current = new Bottle();
     scene.instance.add(bottle.obj);
+    bottle?.showup();
   };
 
   const updateBottle = () => {
@@ -55,8 +56,6 @@ function Page() {
     addGround();
     addBottle();
     animate();
-
-    bottle?.showup();
   }, []);
 
   return <div ref={ref}></div>;

@@ -1,5 +1,8 @@
 declare namespace Tween {
-  type EasingEnum = "Linear";
+  //   type EasingParentEnum = "Linear" | "Bounce";
+  //   type EasingChlidEnum = "easeIn" | "easeOut" | "easeInOut";
+  //   type EasingEnum = EasingParentEnum | `${EasingParentEnum}.${EasingChlidEnum}`;
+  type EasingEnum = "Linear" | "BounceEaseOut";
 
   type TweenFunctionType = (
     currentFrame: number, // 当前帧

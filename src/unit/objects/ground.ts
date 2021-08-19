@@ -1,6 +1,5 @@
 import * as Three from "three";
-import blockConf from "@/confs/block";
-// import sceneConf from "@/confs/scene";
+import groundConf from "@/confs/ground";
 
 export type GroundType = {
   instance: Three.Mesh;
@@ -9,17 +8,20 @@ export type GroundType = {
 class Ground implements GroundType {
   instance: Three.Mesh;
   constructor() {
-    const geometry = new Three.PlaneGeometry(200, 200);
+    const { width, height, color, opacity, rotation, position, receiveShadow } =
+      groundConf;
+
+    const geometry = new Three.PlaneGeometry(width, height);
     const material = new Three.ShadowMaterial({
-      color: "#000",
-      opacity: 0.3,
+      color,
+      opacity,
       // transparent: false,
     });
 
     this.instance = new Three.Mesh(geometry, material);
-    this.instance.rotation.x = -Math.PI / 2;
-    this.instance.position.y = -blockConf.height / 2;
-    this.instance.receiveShadow = true;
+    this.instance.rotation.x = rotation.x;
+    this.instance.position.y = position.y;
+    this.instance.receiveShadow = receiveShadow;
   }
 }
 

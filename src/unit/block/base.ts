@@ -12,9 +12,10 @@ class BaseBlock implements BaseBlockType {
   height: number;
   width: number;
   constructor(type: typeEnum) {
+    const { height, width } = blockConf;
     this.type = type;
-    this.height = blockConf.height;
-    this.width = blockConf.width;
+    this.height = height;
+    this.width = width;
   }
 }
 export default BaseBlock;

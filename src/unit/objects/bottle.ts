@@ -58,13 +58,13 @@ class Bottle implements BottleType {
   }
 
   initHead() {
-    const { radius, positionY } = bottleConf.head;
+    const { radius, positionY, castShadow } = bottleConf.head;
     const head = new Three.Mesh(
       new Three.OctahedronGeometry(radius),
       Bottle.specularMaterial
     );
     head.position.y = positionY;
-    head.castShadow = true;
+    head.castShadow = castShadow;
     this.head.add(head);
   }
 
@@ -82,7 +82,7 @@ class Bottle implements BottleType {
       Bottle.specularMaterial
     );
     bodyTopMesh.position.y = bodyTop.positionY;
-    bodyTopMesh.castShadow = true;
+    bodyTopMesh.castShadow = bodyTop.castShadow;
 
     const bodyMiddleMesh = new Three.Mesh(
       new Three.CylinderGeometry(
@@ -94,7 +94,7 @@ class Bottle implements BottleType {
       Bottle.middleMaterial
     );
     bodyMiddleMesh.position.y = bodyMiddle.positionY;
-    bodyMiddleMesh.castShadow = true;
+    bodyMiddleMesh.castShadow = bodyMiddle.castShadow;
 
     const bodyBottomMesh = new Three.Mesh(
       new Three.CylinderGeometry(
@@ -106,7 +106,7 @@ class Bottle implements BottleType {
       Bottle.bottomMaterial
     );
     bodyBottomMesh.position.y = bodyBottom.positionY;
-    bodyBottomMesh.castShadow = true;
+    bodyBottomMesh.castShadow = bodyBottom.castShadow;
 
     this.body.add(bodyBottomMesh);
     this.body.add(bodyMiddleMesh);
@@ -120,12 +120,15 @@ class Bottle implements BottleType {
   }
 
   update() {
-    this.head.rotation.y += 0.06;
+    const {
+      head: { rotateRate },
+    } = bottleConf;
+    this.head.rotation.y += rotateRate;
   }
 
   showup() {
     const { startPosition } = bottleConf;
-    customAnimation.to(this.obj.position, startPosition, 0.5);
+    customAnimation.to(this.obj.position, startPosition, 0.5, "BounceEaseOut");
   }
 }
 

@@ -5,6 +5,7 @@ import headImg from "@/assets/images/head.png";
 import middleImg from "@/assets/images/top.png";
 import bottomImg from "@/assets/images/bottom.png";
 
+const castShadow = true;
 const height = 11; // 总高度 改变此数值则可按比例缩放
 
 const startPositionY = 0;
@@ -41,6 +42,7 @@ export default {
     radius: headH / 2,
     positionY: bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2,
     rotateRate: 0.06,
+    castShadow,
   },
   bodyTop: {
     // 实际高度：bodyTopH * 2
@@ -49,6 +51,7 @@ export default {
     scaleY: bodyTopH / radius, // radius * scaleY = bodyTopH * 2
     segments,
     positionY: bodyBottomH + bodyMiddleH,
+    castShadow,
   },
   bodyMiddle: {
     height: bodyMiddleH,
@@ -56,6 +59,7 @@ export default {
     bottomRadius: radius * 0.9,
     segments,
     positionY: bodyBottomH + bodyMiddleH / 2,
+    castShadow,
   },
   bodyBottom: {
     height: bodyBottomH,
@@ -63,5 +67,6 @@ export default {
     bottomRadius: radius * 1.2,
     positionY: bodyBottomH / 2,
     segments,
+    castShadow,
   },
 };

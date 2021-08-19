@@ -1,5 +1,5 @@
 import * as Three from "three";
-import sceneConf from "@/confs/scene";
+import cameraConf from "@/confs/camera";
 
 export type CameraType = {
   instance: Three.OrthographicCamera;
@@ -10,25 +10,23 @@ class Camera implements CameraType {
   instance;
   target;
   constructor() {
-    const { cameraPosition } = sceneConf;
-    const aspect = sceneConf.height / sceneConf.width;
-    const frustumSize = sceneConf.frustumSize;
+    const {
+      position,
+      orthographic: { left, right, top, bottom, near, far },
+      target,
+    } = cameraConf;
     this.instance = new Three.OrthographicCamera(
-      -frustumSize,
-      frustumSize,
-      frustumSize * aspect,
-      -frustumSize * aspect,
-      -100,
-      100
+      left,
+      right,
+      top,
+      bottom,
+      near,
+      far
     );
 
     // this.instance.position.set(-10, 10, 10);
-    this.instance.position.set(
-      cameraPosition.x,
-      cameraPosition.y,
-      cameraPosition.z
-    );
-    this.target = new Three.Vector3(0, 0, 0);
+    this.instance.position.set(position.x, position.y, position.z);
+    this.target = new Three.Vector3(target.x, target.y, target.z);
     this.instance.lookAt(this.target);
   }
 }

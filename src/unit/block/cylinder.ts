@@ -1,5 +1,7 @@
 import * as Three from "three";
 import BaseBlock from "./base";
+import blockConf from "@/confs/block";
+const cuboidConf = blockConf.cuboid;
 
 export type CylinderType = {
   instance: Three.Mesh;
@@ -15,6 +17,9 @@ class Cylinder extends BaseBlock implements CylinderType {
   z: number;
   constructor(x: number, y: number, z: number, width?: number) {
     super("cylinder");
+
+    const { receiveShadow, castShadow } = blockConf;
+    const { name, color } = cuboidConf;
     const size = width || this.width;
     const geometry = new Three.CylinderGeometry(
       size / 2,
@@ -22,14 +27,14 @@ class Cylinder extends BaseBlock implements CylinderType {
       this.height,
       120
     );
-    const meterial = new Three.MeshPhongMaterial({ color: "#fff" });
+    const meterial = new Three.MeshPhongMaterial({ color });
     this.instance = new Three.Mesh(geometry, meterial);
-    this.instance.name = "block"; // 为了后续重新渲染等操作
+    this.instance.name = name; // 为了后续重新渲染等操作
     this.instance.position.x = this.x = x;
     this.instance.position.y = this.y = y;
     this.instance.position.z = this.z = z;
-    this.instance.receiveShadow = true;
-    this.instance.castShadow = true;
+    this.instance.receiveShadow = receiveShadow;
+    this.instance.castShadow = castShadow;
   }
 }
 
