@@ -64,6 +64,7 @@ function Page() {
       ref={ref}
       onTouchStart={() => {
         console.log(1);
+        bottle?.rotate();
       }}
       onTouchEnd={() => {
         console.log(2);

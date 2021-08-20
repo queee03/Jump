@@ -19,6 +19,8 @@ const bodyBottomH = height * 0.4;
 const span = height * 0.06; // 头部与身体的间隙
 const radius = (headH * 0.8) / 2; // 核心半径 因为头部宽高相等，所以用头部高度作为核心直径
 
+const rotateScale = 1.4;
+
 export default {
   name: "bottle",
   materialColor: "#800080",
@@ -68,5 +70,78 @@ export default {
     positionY: bodyBottomH / 2,
     segments,
     castShadow,
+  },
+  showup: {
+    duration: 0.5,
+    type: <const>"BounceEaseOut",
+  },
+  rotate: {
+    animationType: <const>"Linear",
+    animations: [
+      {
+        unit: <const>"bottle",
+        attribute: <const>"rotation",
+        duration: 0.14,
+        x: 0,
+        y: 0,
+        z: -Math.PI,
+      },
+      {
+        unit: <const>"bottle",
+        attribute: <const>"rotation",
+        duration: 0.18,
+        delay: 0.14,
+        z: -Math.PI * 2,
+      },
+      // {
+      //   unit: <const>"head",
+      //   attribute: <const>"position",
+      //   duration: 0.1,
+      //   x: 0.45 * rotateScale,
+      //   y: 0.9 * rotateScale,
+      // },
+      // {
+      //   unit: <const>"head",
+      //   attribute: <const>"position",
+      //   duration: 0.1,
+      //   delay: 0.1,
+      //   x: -0.45 * rotateScale,
+      //   y: -0.9 * rotateScale,
+      // },
+      // {
+      //   unit: <const>"head",
+      //   attribute: <const>"position",
+      //   duration: 0.15,
+      //   delay: 0.25,
+      //   abX: 0,
+      //   abY: 7.56,
+      // },
+      // {
+      //   unit: <const>"body",
+      //   attribute: <const>"scale",
+      //   duration: 0.1,
+      //   abX: Math.max(Math.min(1 / rotateScale, 1), 0.7),
+      //   abY: Math.max(rotateScale, 1),
+      //   abZ: Math.max(Math.min(1 / rotateScale, 1), 0.7),
+      // },
+      // {
+      //   unit: <const>"body",
+      //   attribute: <const>"scale",
+      //   duration: 1,
+      //   delay: 0.1,
+      //   abX: Math.max(rotateScale, 1.2),
+      //   abY: Math.min(0.9 / rotateScale, 0.7),
+      //   abZ: Math.max(rotateScale, 1.2),
+      // },
+      {
+        unit: <const>"body",
+        attribute: <const>"scale",
+        duration: 0.3,
+        delay: 0.2,
+        abX: 1,
+        abY: 1,
+        abZ: 1,
+      },
+    ],
   },
 };

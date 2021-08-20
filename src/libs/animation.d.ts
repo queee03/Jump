@@ -1,5 +1,5 @@
-declare namespace Animationt {
-  type EasingEnum = Tween.EasingEnum;
+declare namespace AnimationTypes {
+  type EasingEnum = TweenTypes.EasingEnum;
 
   type PositionKeyEnum = "x" | "y" | "z";
 
@@ -11,7 +11,8 @@ declare namespace Animationt {
     from: PositionType,
     to: PositionType,
     duration?: number,
-    type?: EasingEnum
+    type?: EasingEnum,
+    delay?: number
   ) => void;
 
   type TweenAnimationType = (

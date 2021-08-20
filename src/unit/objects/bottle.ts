@@ -2,11 +2,16 @@ import * as Three from "three";
 import customAnimation from "@/libs/animation";
 import bottleConf from "@/confs/bottle";
 
+type DirectionEnum = 0 | 1; // 0:延x轴跳跃 1:y
+type AxisEnum = "x" | "y" | "z" | undefined;
+
 class Bottle {
   obj: Three.Object3D;
   bottle: Three.Object3D;
   head: Three.Object3D;
   body: Three.Object3D;
+  direction: DirectionEnum = 0;
+  axis: AxisEnum;
   static specularMaterial: Three.MeshPhongMaterial;
   static middleMaterial: Three.MeshPhongMaterial;
   static bottomMaterial: Three.MeshPhongMaterial;
@@ -120,8 +125,42 @@ class Bottle {
   }
 
   showup() {
-    const { startPosition } = bottleConf;
-    customAnimation.to(this.obj.position, startPosition, 0.5, "BounceEaseOut");
+    const { startPosition, showup } = bottleConf;
+    customAnimation.to(
+      this.obj.position,
+      startPosition,
+      showup.duration,
+      showup.type
+    );
+  }
+
+  setDirection(direction: DirectionEnum, axis: AxisEnum) {
+    this.direction = direction;
+    this.axis = axis;
+  }
+
+  rotate() {
+    const {
+      rotate: { animationType, animations },
+    } = bottleConf;
+    this.bottle.rotation.x = this.bottle.rotation.z = 0;
+    if (this.direction === 0) {
+      animations.forEach((item) => {
+        const { unit, attribute, x, y, z, abX, abY } = item;
+        const obj = this[unit][attribute];
+        customAnimation.to(
+          obj,
+          {
+            x: abX || (x ? obj.x + x : obj.x),
+            y: abY || (y ? obj.y + y : obj.y),
+            z: z ? obj.z + z : obj.z,
+          },
+          item.duration,
+          animationType,
+          item.delay
+        );
+      });
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-declare namespace Tween {
+declare namespace TweenTypes {
   //   type EasingParentEnum = "Linear" | "Bounce";
   //   type EasingChlidEnum = "easeIn" | "easeOut" | "easeInOut";
   //   type EasingEnum = EasingParentEnum | `${EasingParentEnum}.${EasingChlidEnum}`;

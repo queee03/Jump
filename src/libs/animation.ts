@@ -8,20 +8,24 @@
 */
 
 /// <reference path="animation.d.ts"/>
-import A = Animationt;
+import A = AnimationTypes;
 import Tween from "./tween";
 
 const fps = 60;
 const frameInterval = 1000 / fps; // 帧间隔时间ms 对于人眼已经够用
 
-const to: A.ToType = function (from, to, duration, type) {
-  const keys = Object.keys(from);
+const to: A.ToType = function (from, to, duration, type, delay) {
+  const keys = ["x", "y", "z"];
   keys.forEach((key) => {
     const prop = <A.PositionKeyEnum>key;
-    // if (prop === "y") // test
-    TweenAnimation(from[prop], to[prop], duration, type, (value) => {
-      if (value || value === 0) from[prop] = value;
-    });
+    setTimeout(
+      () => {
+        TweenAnimation(from[prop], to[prop], duration, type, (value) => {
+          if (value || value === 0) from[prop] = value;
+        });
+      },
+      delay ? delay * 1000 : 0
+    );
   });
 };
 const customAnimation: A.CustomAnimationType = { to };

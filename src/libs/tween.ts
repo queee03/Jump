@@ -1,5 +1,5 @@
 /// <reference path="tween.d.ts"/>
-import T = Tween;
+import T = TweenTypes;
 
 /* 
     from: 初始坐标值
