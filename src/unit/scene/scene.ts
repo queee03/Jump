@@ -1,29 +1,16 @@
 import * as Three from "three";
 import Camera from "./camera";
-import type { CameraType } from "./camera";
 import Light from "./light";
-import type { LightType } from "./light";
 import Background from "@/unit/objects/background";
-import type { BackgroundType } from "@/unit/objects/background";
 import sceneConf from "@/confs/scene";
 
-export type SceneType = {
+class Scene {
   instance: Three.Scene;
-  camera: CameraType;
-  light: LightType;
-  background: BackgroundType;
+  camera: Camera;
+  light: Light;
+  background: Background;
   axesHelper: Three.AxesHelper;
   renderer: Three.WebGLRenderer;
-  render: () => void;
-};
-
-class Scene implements SceneType {
-  instance;
-  camera;
-  light;
-  background;
-  axesHelper;
-  renderer;
   constructor() {
     const {
       width,

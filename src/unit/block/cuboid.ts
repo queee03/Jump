@@ -3,14 +3,7 @@ import BaseBlock from "./base";
 import blockConf from "@/confs/block";
 const cuboidConf = blockConf.cuboid;
 
-export type CuboidType = {
-  instance: Three.Mesh;
-  x: number;
-  y: number;
-  z: number;
-};
-
-class Cuboid extends BaseBlock implements CuboidType {
+class Cuboid extends BaseBlock {
   instance: Three.Mesh;
   x: number;
   y: number;

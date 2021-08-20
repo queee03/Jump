@@ -1,11 +1,7 @@
 import * as Three from "three";
 import backgroundConf from "@/confs/background";
 
-export type BackgroundType = {
-  instance: Three.Mesh;
-};
-
-class Background implements BackgroundType {
+class Background {
   instance: Three.Mesh;
   constructor() {
     const { width, height, color, opacity, position } = backgroundConf;

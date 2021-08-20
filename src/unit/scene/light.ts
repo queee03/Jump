@@ -5,12 +5,8 @@ type lightInstanceType =
   | Three.AmbientLight
   | Three.DirectionalLight
   | Three.Mesh;
-export type LightType = {
-  instances: Record<string, lightInstanceType>;
-  shadowTarget: Three.Mesh;
-};
 
-class Light implements LightType {
+class Light {
   instances: Record<string, lightInstanceType> = {};
   shadowTarget;
   constructor() {

@@ -1,13 +1,8 @@
 import blockConf from "@/confs/block";
 
 type typeEnum = "cuboid" | "cylinder";
-export type BaseBlockType = {
-  type: typeEnum;
-  height: number;
-  width: number;
-};
 
-class BaseBlock implements BaseBlockType {
+class BaseBlock {
   type: typeEnum;
   height: number;
   width: number;

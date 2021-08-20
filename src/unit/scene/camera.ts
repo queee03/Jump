@@ -1,27 +1,18 @@
 import * as Three from "three";
 import cameraConf from "@/confs/camera";
 
-export type CameraType = {
+class Camera {
   instance: Three.OrthographicCamera;
   target: Three.Vector3;
-};
-
-class Camera implements CameraType {
-  instance;
-  target;
   constructor() {
-    const {
-      position,
-      orthographic: { left, right, top, bottom, near, far },
-      target,
-    } = cameraConf;
+    const { position, orthographic, target } = cameraConf;
     this.instance = new Three.OrthographicCamera(
-      left,
-      right,
-      top,
-      bottom,
-      near,
-      far
+      orthographic.left,
+      orthographic.right,
+      orthographic.top,
+      orthographic.bottom,
+      orthographic.near,
+      orthographic.far
     );
 
     // this.instance.position.set(-10, 10, 10);

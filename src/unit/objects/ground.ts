@@ -1,11 +1,7 @@
 import * as Three from "three";
 import groundConf from "@/confs/ground";
 
-export type GroundType = {
-  instance: Three.Mesh;
-};
-
-class Ground implements GroundType {
+class Ground {
   instance: Three.Mesh;
   constructor() {
     const { width, height, color, opacity, rotation, position, receiveShadow } =

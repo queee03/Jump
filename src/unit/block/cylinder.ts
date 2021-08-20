@@ -3,14 +3,7 @@ import BaseBlock from "./base";
 import blockConf from "@/confs/block";
 const cuboidConf = blockConf.cuboid;
 
-export type CylinderType = {
-  instance: Three.Mesh;
-  x: number;
-  y: number;
-  z: number;
-};
-
-class Cylinder extends BaseBlock implements CylinderType {
+class Cylinder extends BaseBlock {
   instance: Three.Mesh;
   x: number;
   y: number;

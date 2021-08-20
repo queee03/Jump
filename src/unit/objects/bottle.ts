@@ -2,14 +2,7 @@ import * as Three from "three";
 import customAnimation from "@/libs/animation";
 import bottleConf from "@/confs/bottle";
 
-export type BottleType = {
-  obj: Three.Object3D;
-  bottle: Three.Object3D;
-  head: Three.Object3D;
-  body: Three.Object3D;
-};
-
-class Bottle implements BottleType {
+class Bottle {
   obj: Three.Object3D;
   bottle: Three.Object3D;
   head: Three.Object3D;
