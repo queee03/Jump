@@ -11,6 +11,7 @@ function Page() {
   // const sceneRef = useRef<Scene | undefined>();
   // const bottleRef = useRef<Bottle | undefined>();
 
+  // - 需优化? -
   const scene = new Scene();
   const bottle = new Bottle();
   const renderer = scene.renderer;
@@ -58,7 +59,17 @@ function Page() {
     animate();
   }, []);
 
-  return <div ref={ref}></div>;
+  return (
+    <div
+      ref={ref}
+      onTouchStart={() => {
+        console.log(1);
+      }}
+      onTouchEnd={() => {
+        console.log(2);
+      }}
+    ></div>
+  );
 }
 
 export default Page;
