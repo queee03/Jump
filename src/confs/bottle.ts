@@ -5,8 +5,13 @@ import headImg from "@/assets/images/head.png";
 import middleImg from "@/assets/images/top.png";
 import bottomImg from "@/assets/images/bottom.png";
 
+export type DirectionEnum = 0 | 1; // 0:延x轴跳跃 1:y
+export type AxisEnum = "x" | "y" | "z" | undefined;
+export type StatusEnum = "stop" | "shrink";
+
 const castShadow = true;
 const height = 11; // 总高度 改变此数值则可按比例缩放
+const horizon = blockConf.height / 2 + blockConf.initPosition.y;
 
 const startPositionY = 0;
 const initPositionY = startPositionY + 30;
@@ -20,18 +25,22 @@ const span = height * 0.06; // 头部与身体的间隙
 const radius = (headH * 0.8) / 2; // 核心半径 因为头部宽高相等，所以用头部高度作为核心直径
 
 const rotateScale = 1.4;
-
+/* 
+  以 horizon 为相对0点，obj的Y轴中心在0点，但bottle整体可视部分在0点以上
+*/
 export default {
   name: "bottle",
   materialColor: "#800080",
+  initScale: 1,
+  horizon,
   initPosition: {
     x: blockConf.initPosition.x,
-    y: blockConf.height / 2 + initPositionY,
+    y: horizon + initPositionY,
     z: 0,
   },
   startPosition: {
     x: blockConf.initPosition.x,
-    y: blockConf.height / 2 + startPositionY,
+    y: horizon + startPositionY,
     z: 0,
   },
   texture: {
@@ -75,6 +84,12 @@ export default {
     duration: 0.5,
     type: <const>"BounceEaseOut",
   },
+  shrink: {
+    minScale: 0.55,
+    horizonDeltaScale: 0.007,
+    deltaScale: 0.005,
+    headDelta: 0.03,
+  },
   rotate: {
     animationType: <const>"Linear",
     animations: [
@@ -108,14 +123,14 @@ export default {
       //   x: -0.45 * rotateScale,
       //   y: -0.9 * rotateScale,
       // },
-      // {
-      //   unit: <const>"head",
-      //   attribute: <const>"position",
-      //   duration: 0.15,
-      //   delay: 0.25,
-      //   abX: 0,
-      //   abY: 7.56,
-      // },
+      {
+        unit: <const>"head",
+        attribute: <const>"position",
+        duration: 0.15,
+        delay: 0.25,
+        abX: 0,
+        abY: bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2,
+      },
       // {
       //   unit: <const>"body",
       //   attribute: <const>"scale",
@@ -137,7 +152,7 @@ export default {
         unit: <const>"body",
         attribute: <const>"scale",
         duration: 0.3,
-        delay: 0.2,
+        delay: 0.3,
         abX: 1,
         abY: 1,
         abZ: 1,

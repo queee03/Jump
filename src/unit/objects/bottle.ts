@@ -1,15 +1,15 @@
 import * as Three from "three";
 import customAnimation from "@/libs/animation";
 import bottleConf from "@/confs/bottle";
-
-type DirectionEnum = 0 | 1; // 0:延x轴跳跃 1:y
-type AxisEnum = "x" | "y" | "z" | undefined;
+import type { DirectionEnum, AxisEnum, StatusEnum } from "@/confs/bottle";
 
 class Bottle {
   obj: Three.Object3D;
   bottle: Three.Object3D;
   head: Three.Object3D;
   body: Three.Object3D;
+  status: StatusEnum = "stop";
+  scale: number = bottleConf.initScale;
   direction: DirectionEnum = 0;
   axis: AxisEnum;
   static specularMaterial: Three.MeshPhongMaterial;
@@ -22,11 +22,17 @@ class Bottle {
     this.head = new Three.Object3D();
     this.body = new Three.Object3D();
 
+    this.init();
+  }
+
+  init() {
     this.initTexture();
-    this.initObj();
     this.initHead();
     this.initBody();
-    this.init();
+    this.initObj();
+    this.bottle.add(this.head);
+    this.bottle.add(this.body);
+    this.obj.add(this.bottle);
   }
 
   initTexture() {
@@ -61,9 +67,9 @@ class Bottle {
       new Three.OctahedronGeometry(radius),
       Bottle.specularMaterial
     );
-    head.position.y = positionY;
     head.castShadow = castShadow;
     this.head.add(head);
+    this.head.position.y = positionY;
   }
 
   initBody() {
@@ -111,17 +117,14 @@ class Bottle {
     this.body.add(bodyTopMesh);
   }
 
-  init() {
-    this.bottle.add(this.head);
-    this.bottle.add(this.body);
-    this.obj.add(this.bottle);
-  }
-
   update() {
     const {
       head: { rotateRate },
     } = bottleConf;
     this.head.rotation.y += rotateRate;
+    if (this.status === "shrink") {
+      this.shrinkUpdate();
+    }
   }
 
   showup() {
@@ -132,6 +135,39 @@ class Bottle {
       showup.duration,
       showup.type
     );
+  }
+
+  shrink() {
+    this.status = "shrink";
+  }
+
+  stop() {
+    this.status = "stop";
+    this.shrinkInit();
+  }
+
+  shrinkUpdate() {
+    const {
+      horizon,
+      shrink: { minScale, horizonDeltaScale, deltaScale, headDelta },
+    } = bottleConf;
+
+    let scale = this.scale - deltaScale;
+    if (scale < minScale) return;
+
+    this.scale = scale;
+    this.body.scale.y = this.scale;
+    this.body.scale.x += horizonDeltaScale;
+    this.body.scale.z += horizonDeltaScale;
+    this.head.position.y -= headDelta;
+    // this.obj.position.y -= headDelta / 2; // 手动设置中心点
+  }
+
+  shrinkInit() {
+    const { initScale, head } = bottleConf;
+    this.scale = initScale;
+    // this.body.scale.set(initScale, initScale, initScale);
+    // this.head.position.y = head.positionY;
   }
 
   setDirection(direction: DirectionEnum, axis: AxisEnum) {
@@ -146,14 +182,14 @@ class Bottle {
     this.bottle.rotation.x = this.bottle.rotation.z = 0;
     if (this.direction === 0) {
       animations.forEach((item) => {
-        const { unit, attribute, x, y, z, abX, abY } = item;
+        const { unit, attribute, x, y, z, abX, abY, abZ } = item;
         const obj = this[unit][attribute];
         customAnimation.to(
           obj,
           {
             x: abX || (x ? obj.x + x : obj.x),
             y: abY || (y ? obj.y + y : obj.y),
-            z: z ? obj.z + z : obj.z,
+            z: abZ || (z ? obj.z + z : obj.z),
           },
           item.duration,
           animationType,

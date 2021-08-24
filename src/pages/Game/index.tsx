@@ -63,11 +63,13 @@ function Page() {
     <div
       ref={ref}
       onTouchStart={() => {
-        console.log(1);
-        bottle?.rotate();
+        console.log("onTouchStart");
+        bottle?.shrink();
       }}
       onTouchEnd={() => {
-        console.log(2);
+        console.log("onTouchEnd");
+        bottle?.stop();
+        bottle?.rotate();
       }}
     ></div>
   );
