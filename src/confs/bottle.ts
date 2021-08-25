@@ -94,21 +94,6 @@ export default {
     headDelta: 0.03,
   },
   rebound: {
-    // {
-    //   unit: <const>"head",
-    //   attribute: <const>"position",
-    //   duration: 0.1,
-    //   x: 0.45 * rotateScale,
-    //   y: 0.9 * rotateScale,
-    // },
-    // {
-    //   unit: <const>"head",
-    //   attribute: <const>"position",
-    //   duration: 0.1,
-    //   delay: 0.1,
-    //   x: -0.45 * rotateScale,
-    //   y: -0.9 * rotateScale,
-    // },
     headAnimation: {
       duration: 0.15,
       // delay: 0.25,
@@ -117,23 +102,6 @@ export default {
         y: bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2,
       },
     },
-    // {
-    //   unit: <const>"body",
-    //   attribute: <const>"scale",
-    //   duration: 0.1,
-    //   abX: Math.max(Math.min(1 / rotateScale, 1), 0.7),
-    //   abY: Math.max(rotateScale, 1),
-    //   abZ: Math.max(Math.min(1 / rotateScale, 1), 0.7),
-    // },
-    // {
-    //   unit: <const>"body",
-    //   attribute: <const>"scale",
-    //   duration: 1,
-    //   delay: 0.1,
-    //   abX: Math.max(rotateScale, 1.2),
-    //   abY: Math.min(0.9 / rotateScale, 0.7),
-    //   abZ: Math.max(rotateScale, 1.2),
-    // },
     bodyAnimation: {
       duration: 0.3,
       // delay: 0.3,

@@ -70,7 +70,12 @@ class BaseBlock {
       rebound: { animation },
     } = blockConf;
     this.scale = initScale;
-    customAnimation.to(this.instance.scale, animation.to, animation.duration);
+    customAnimation.to(
+      this.instance.scale,
+      animation.to,
+      animation.duration,
+      "BounceEaseOut"
+    );
   }
 }
 export default BaseBlock;
