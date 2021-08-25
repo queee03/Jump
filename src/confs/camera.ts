@@ -4,10 +4,10 @@ const frustumSize = sceneConf.frustumSize;
 
 export default {
   position: {
-    // x: 0,
-    // y: 0,
-    x: -10,
-    y: 10,
+    x: 0,
+    y: 0,
+    // x: -10,
+    // y: 10,
     z: 10,
   },
   orthographic: {

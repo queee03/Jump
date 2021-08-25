@@ -1,10 +1,8 @@
 import * as Three from "three";
 import BaseBlock from "./base";
-import blockConf from "@/confs/block";
-const cuboidConf = blockConf.cuboid;
+import blockConf, { cylinder as cylinderConf } from "@/confs/block";
 
 class Cylinder extends BaseBlock {
-  instance: Three.Mesh;
   x: number;
   y: number;
   z: number;
@@ -12,7 +10,7 @@ class Cylinder extends BaseBlock {
     super("cylinder");
 
     const { receiveShadow, castShadow } = blockConf;
-    const { name, color } = cuboidConf;
+    const { name, color } = cylinderConf;
     const size = width || this.width;
     const geometry = new Three.CylinderGeometry(
       size / 2,
@@ -21,13 +19,19 @@ class Cylinder extends BaseBlock {
       120
     );
     const meterial = new Three.MeshPhongMaterial({ color });
-    this.instance = new Three.Mesh(geometry, meterial);
-    this.instance.name = name; // 为了后续重新渲染等操作
+
+    const block = new Three.Mesh(geometry, meterial);
+    block.name = name;
+    block.position.y = this.height / 2;
+    block.receiveShadow = receiveShadow;
+    block.castShadow = castShadow;
+
     this.instance.position.x = this.x = x;
-    this.instance.position.y = this.y = y;
     this.instance.position.z = this.z = z;
-    this.instance.receiveShadow = receiveShadow;
-    this.instance.castShadow = castShadow;
+    this.y = y;
+    const instanceY = this.y - this.height / 2;
+    this.instance.position.y = instanceY;
+    this.instance.add(block);
   }
 }
 

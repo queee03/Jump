@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Scene } from "@/unit/scene/index";
 import Ground from "@/unit/objects/ground";
 import Bottle from "@/unit/objects/bottle";
+import BaseBlock from "@/unit/block/base";
 import Cuboid from "@/unit/block/cuboid";
 import Cylinder from "@/unit/block/cylinder";
 import blockConf from "@/confs/block";
@@ -11,10 +12,18 @@ function Page() {
   // const sceneRef = useRef<Scene | undefined>();
   // const bottleRef = useRef<Bottle | undefined>();
 
-  // - 需优化? -
+  // - 需优化为ref? -
   const scene = new Scene();
-  const bottle = new Bottle();
   const renderer = scene.renderer;
+  const bottle = new Bottle();
+  let currentBlock: BaseBlock;
+
+  const addGround = () => {
+    const ground = new Ground();
+    scene.instance.add(ground.instance);
+    // const background = new Background();
+    // scene.instance.add(background.instance);
+  };
 
   const addInitBlock = () => {
     const { initPosition } = blockConf;
@@ -24,37 +33,49 @@ function Page() {
       initPosition.z
     );
     const cylinderBlock = new Cylinder(23, 0, 0);
+    currentBlock = cuboidBlock;
     scene.instance.add(cuboidBlock.instance);
     scene.instance.add(cylinderBlock.instance);
-  };
-
-  const addGround = () => {
-    const ground = new Ground();
-    scene.instance.add(ground.instance);
-    // const background = new Background();
-    // scene.instance.add(background.instance);
   };
 
   const addBottle = () => {
     // bottleRef.current = new Bottle();
     scene.instance.add(bottle.obj);
-    bottle?.showup();
+    bottle.showup();
+  };
+
+  const updateBlock = () => {
+    currentBlock?.update();
   };
 
   const updateBottle = () => {
-    bottle?.update();
+    bottle.update();
   };
 
   const animate = () => {
     scene.render();
+    updateBlock();
     updateBottle();
     requestAnimationFrame(animate);
   };
 
+  const handleTouchStart = () => {
+    console.log("onTouchStart");
+    bottle?.shrink();
+    currentBlock?.shrink();
+  };
+
+  const handleTouchEnd = () => {
+    console.log("onTouchEnd");
+    bottle?.stop();
+    currentBlock?.stop();
+    bottle?.rotate();
+  };
+
   useEffect(() => {
     if (ref.current) ref.current.appendChild(renderer.domElement);
-    addInitBlock();
     addGround();
+    addInitBlock();
     addBottle();
     animate();
   }, []);
@@ -62,15 +83,8 @@ function Page() {
   return (
     <div
       ref={ref}
-      onTouchStart={() => {
-        console.log("onTouchStart");
-        bottle?.shrink();
-      }}
-      onTouchEnd={() => {
-        console.log("onTouchEnd");
-        bottle?.stop();
-        bottle?.rotate();
-      }}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     ></div>
   );
 }

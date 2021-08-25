@@ -31,8 +31,9 @@ const rotateScale = 1.4;
 export default {
   name: "bottle",
   materialColor: "#800080",
-  initScale: 1,
   horizon,
+  initScale: 1,
+  initStatus: <const>"stop",
   initPosition: {
     x: blockConf.initPosition.x,
     y: horizon + initPositionY,

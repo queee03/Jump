@@ -8,7 +8,7 @@ class Bottle {
   bottle: Three.Object3D;
   head: Three.Object3D;
   body: Three.Object3D;
-  status: StatusEnum = "stop";
+  status: StatusEnum = bottleConf.initStatus;
   scale: number = bottleConf.initScale;
   direction: DirectionEnum = 0;
   axis: AxisEnum;
@@ -118,6 +118,7 @@ class Bottle {
   }
 
   update() {
+    // console.log(this.status);
     const {
       head: { rotateRate },
     } = bottleConf;
@@ -138,6 +139,7 @@ class Bottle {
   }
 
   shrink() {
+    // console.log("shrink");
     this.status = "shrink";
   }
 
