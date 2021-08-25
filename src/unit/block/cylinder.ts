@@ -3,11 +3,8 @@ import BaseBlock from "./base";
 import blockConf, { cylinder as cylinderConf } from "@/confs/block";
 
 class Cylinder extends BaseBlock {
-  x: number;
-  y: number;
-  z: number;
   constructor(x: number, y: number, z: number, width?: number) {
-    super("cylinder");
+    super("cylinder", x, y, z);
 
     const { receiveShadow, castShadow } = blockConf;
     const { name, color } = cylinderConf;
@@ -25,13 +22,7 @@ class Cylinder extends BaseBlock {
     block.position.y = this.height / 2;
     block.receiveShadow = receiveShadow;
     block.castShadow = castShadow;
-
-    this.instance.position.x = this.x = x;
-    this.instance.position.z = this.z = z;
-    this.y = y;
-    const instanceY = this.y - this.height / 2;
-    this.instance.position.y = instanceY;
-    this.instance.add(block);
+    this.init(block);
   }
 }
 
