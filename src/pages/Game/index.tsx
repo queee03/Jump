@@ -67,8 +67,8 @@ function Page() {
 
   const handleTouchEnd = () => {
     console.log("onTouchEnd");
-    bottle?.stop();
-    currentBlock?.stop();
+    bottle?.rebound();
+    currentBlock?.rebound();
     bottle?.rotate();
   };
 

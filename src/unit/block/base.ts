@@ -1,6 +1,7 @@
 import * as Three from "three";
 import blockConf from "@/confs/block";
 import type { typeEnum, StatusEnum } from "@/confs/block";
+import customAnimation from "@/libs/animation";
 
 class BaseBlock {
   instance: Three.Object3D = new Three.Object3D();
@@ -45,9 +46,9 @@ class BaseBlock {
     this.status = "shrink";
   }
 
-  stop() {
+  rebound() {
     this.status = "stop";
-    this.shrinkInit();
+    this.reboundUpdate();
   }
 
   shrinkUpdate() {
@@ -63,9 +64,13 @@ class BaseBlock {
     this.instance.scale.y = this.scale;
   }
 
-  shrinkInit() {
-    const { initScale } = blockConf;
+  reboundUpdate() {
+    const {
+      initScale,
+      rebound: { animation },
+    } = blockConf;
     this.scale = initScale;
+    customAnimation.to(this.instance.scale, animation.to, animation.duration);
   }
 }
 export default BaseBlock;

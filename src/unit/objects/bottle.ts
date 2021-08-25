@@ -1,5 +1,6 @@
 import * as Three from "three";
 import customAnimation from "@/libs/animation";
+import blockConf from "@/confs/block";
 import bottleConf from "@/confs/bottle";
 import type { DirectionEnum, AxisEnum, StatusEnum } from "@/confs/bottle";
 
@@ -143,14 +144,13 @@ class Bottle {
     this.status = "shrink";
   }
 
-  stop() {
+  rebound() {
     this.status = "stop";
-    this.shrinkInit();
+    this.reboundUpdate();
   }
 
   shrinkUpdate() {
     const {
-      horizon,
       shrink: { minScale, horizonDeltaScale, deltaScale, headDelta },
     } = bottleConf;
 
@@ -162,14 +162,33 @@ class Bottle {
     this.body.scale.x += horizonDeltaScale;
     this.body.scale.z += horizonDeltaScale;
     this.head.position.y -= headDelta;
-    // this.obj.position.y -= headDelta / 2; // 手动设置中心点
+
+    const deltaY = blockConf.height * blockConf.shrink.deltaScale;
+    this.obj.position.y -= deltaY; // block向下压缩，小人也要跟着往下掉
   }
 
-  shrinkInit() {
-    const { initScale, head } = bottleConf;
+  reboundUpdate() {
+    const {
+      initScale,
+      rebound: { headAnimation, bodyAnimation },
+    } = bottleConf;
     this.scale = initScale;
-    // this.body.scale.set(initScale, initScale, initScale);
-    // this.head.position.y = head.positionY;
+    customAnimation.to(
+      this.head.position,
+      {
+        ...this.head.position,
+        ...headAnimation.to,
+      },
+      headAnimation.duration
+    );
+    customAnimation.to(
+      this.body.scale,
+      {
+        ...this.body.scale,
+        ...bodyAnimation.to,
+      },
+      bodyAnimation.duration
+    );
   }
 
   setDirection(direction: DirectionEnum, axis: AxisEnum) {
@@ -184,14 +203,14 @@ class Bottle {
     this.bottle.rotation.x = this.bottle.rotation.z = 0;
     if (this.direction === 0) {
       animations.forEach((item) => {
-        const { unit, attribute, x, y, z, abX, abY, abZ } = item;
-        const obj = this[unit][attribute];
+        const { x, y, z } = item;
+        const rotation = this.bottle.rotation;
         customAnimation.to(
-          obj,
+          rotation,
           {
-            x: abX || (x ? obj.x + x : obj.x),
-            y: abY || (y ? obj.y + y : obj.y),
-            z: abZ || (z ? obj.z + z : obj.z),
+            x: x ? rotation.x + x : rotation.x,
+            y: y ? rotation.y + y : rotation.y,
+            z: z ? rotation.z + z : rotation.z,
           },
           item.duration,
           animationType,

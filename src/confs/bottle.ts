@@ -10,6 +10,8 @@ export type AxisEnum = "x" | "y" | "z" | undefined;
 export type StatusEnum = "stop" | "shrink";
 
 const castShadow = true;
+const initScale = 1;
+
 const height = 11; // 总高度 改变此数值则可按比例缩放
 const horizon = blockConf.height / 2 + blockConf.initPosition.y;
 
@@ -32,7 +34,7 @@ export default {
   name: "bottle",
   materialColor: "#800080",
   horizon,
-  initScale: 1,
+  initScale,
   initStatus: <const>"stop",
   initPosition: {
     x: blockConf.initPosition.x,
@@ -91,72 +93,70 @@ export default {
     deltaScale: 0.005,
     headDelta: 0.03,
   },
+  rebound: {
+    // {
+    //   unit: <const>"head",
+    //   attribute: <const>"position",
+    //   duration: 0.1,
+    //   x: 0.45 * rotateScale,
+    //   y: 0.9 * rotateScale,
+    // },
+    // {
+    //   unit: <const>"head",
+    //   attribute: <const>"position",
+    //   duration: 0.1,
+    //   delay: 0.1,
+    //   x: -0.45 * rotateScale,
+    //   y: -0.9 * rotateScale,
+    // },
+    headAnimation: {
+      duration: 0.15,
+      // delay: 0.25,
+      to: {
+        x: 0,
+        y: bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2,
+      },
+    },
+    // {
+    //   unit: <const>"body",
+    //   attribute: <const>"scale",
+    //   duration: 0.1,
+    //   abX: Math.max(Math.min(1 / rotateScale, 1), 0.7),
+    //   abY: Math.max(rotateScale, 1),
+    //   abZ: Math.max(Math.min(1 / rotateScale, 1), 0.7),
+    // },
+    // {
+    //   unit: <const>"body",
+    //   attribute: <const>"scale",
+    //   duration: 1,
+    //   delay: 0.1,
+    //   abX: Math.max(rotateScale, 1.2),
+    //   abY: Math.min(0.9 / rotateScale, 0.7),
+    //   abZ: Math.max(rotateScale, 1.2),
+    // },
+    bodyAnimation: {
+      duration: 0.3,
+      // delay: 0.3,
+      to: {
+        x: initScale,
+        y: initScale,
+        z: initScale,
+      },
+    },
+  },
   rotate: {
     animationType: <const>"Linear",
     animations: [
       {
-        unit: <const>"bottle",
-        attribute: <const>"rotation",
         duration: 0.14,
         x: 0,
         y: 0,
         z: -Math.PI,
       },
       {
-        unit: <const>"bottle",
-        attribute: <const>"rotation",
         duration: 0.18,
         delay: 0.14,
         z: -Math.PI * 2,
-      },
-      // {
-      //   unit: <const>"head",
-      //   attribute: <const>"position",
-      //   duration: 0.1,
-      //   x: 0.45 * rotateScale,
-      //   y: 0.9 * rotateScale,
-      // },
-      // {
-      //   unit: <const>"head",
-      //   attribute: <const>"position",
-      //   duration: 0.1,
-      //   delay: 0.1,
-      //   x: -0.45 * rotateScale,
-      //   y: -0.9 * rotateScale,
-      // },
-      {
-        unit: <const>"head",
-        attribute: <const>"position",
-        duration: 0.15,
-        delay: 0.25,
-        abX: 0,
-        abY: bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2,
-      },
-      // {
-      //   unit: <const>"body",
-      //   attribute: <const>"scale",
-      //   duration: 0.1,
-      //   abX: Math.max(Math.min(1 / rotateScale, 1), 0.7),
-      //   abY: Math.max(rotateScale, 1),
-      //   abZ: Math.max(Math.min(1 / rotateScale, 1), 0.7),
-      // },
-      // {
-      //   unit: <const>"body",
-      //   attribute: <const>"scale",
-      //   duration: 1,
-      //   delay: 0.1,
-      //   abX: Math.max(rotateScale, 1.2),
-      //   abY: Math.min(0.9 / rotateScale, 0.7),
-      //   abZ: Math.max(rotateScale, 1.2),
-      // },
-      {
-        unit: <const>"body",
-        attribute: <const>"scale",
-        duration: 0.3,
-        delay: 0.3,
-        abX: 1,
-        abY: 1,
-        abZ: 1,
       },
     ],
   },
