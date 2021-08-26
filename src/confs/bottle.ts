@@ -11,13 +11,13 @@ export type StatusEnum = "stop" | "shrink";
 
 const castShadow = true;
 const initScale = 1;
+const segments = 20;
 
-const height = 11; // 总高度 改变此数值则可按比例缩放
 const horizon = blockConf.height / 2 + blockConf.initPosition.y;
+const height = 11; // 总高度 改变此数值则可按比例缩放
 
 const startPositionY = 0;
 const initPositionY = startPositionY + 30;
-const segments = 20;
 
 const headH = height * 0.34;
 const bodyTopH = height * 0.1;
@@ -26,7 +26,9 @@ const bodyBottomH = height * 0.4;
 const span = height * 0.06; // 头部与身体的间隙
 const radius = (headH * 0.8) / 2; // 核心半径 因为头部宽高相等，所以用头部高度作为核心直径
 
-const rotateScale = 1.4;
+const initHeadPositionY =
+  bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2;
+
 /* 
   以 horizon 为相对0点，obj的Y轴中心在0点，但bottle整体可视部分在0点以上
 */
@@ -54,7 +56,7 @@ export default {
   head: {
     // 实际高度：headH
     radius: headH / 2,
-    positionY: bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2,
+    positionY: initHeadPositionY,
     rotateRate: 0.06,
     castShadow,
   },
@@ -94,21 +96,55 @@ export default {
     headDelta: 0.03,
   },
   rebound: {
+    animationType: <const>"BounceEaseOut",
+    animations: [
+      {
+        unit: <const>"head",
+        attribute: <const>"position",
+        duration: 0.3,
+        to: {
+          x: 0,
+          y: initHeadPositionY,
+        },
+      },
+      {
+        unit: <const>"body",
+        attribute: <const>"scale",
+        duration: 0.3,
+        to: {
+          x: initScale,
+          y: initScale,
+          z: initScale,
+        },
+      },
+      {
+        unit: <const>"obj",
+        attribute: <const>"position",
+        duration: 0.3,
+        to: {
+          y: horizon + startPositionY,
+        },
+      },
+    ],
     headAnimation: {
       duration: 0.15,
-      // delay: 0.25,
       to: {
         x: 0,
-        y: bodyBottomH + bodyMiddleH + bodyTopH + span + headH / 2,
+        y: initHeadPositionY,
       },
     },
     bodyAnimation: {
       duration: 0.3,
-      // delay: 0.3,
       to: {
         x: initScale,
         y: initScale,
         z: initScale,
+      },
+    },
+    objectAnimation: {
+      duration: 0.15,
+      to: {
+        y: initPositionY,
       },
     },
   },

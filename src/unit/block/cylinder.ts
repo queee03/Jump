@@ -7,13 +7,13 @@ class Cylinder extends BaseBlock {
     super("cylinder", x, y, z);
 
     const { receiveShadow, castShadow } = blockConf;
-    const { name, color } = cylinderConf;
+    const { name, color, radialSegments } = cylinderConf;
     const size = width || this.width;
     const geometry = new Three.CylinderGeometry(
       size / 2,
       size / 2,
       this.height,
-      120
+      radialSegments
     );
     const meterial = new Three.MeshPhongMaterial({ color });
 

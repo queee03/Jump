@@ -16,6 +16,7 @@ export const cuboid = {
 export const cylinder = {
   name: "block",
   color: "#fff",
+  radialSegments: 120,
 };
 
 export default {

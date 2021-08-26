@@ -52,7 +52,6 @@ class BaseBlock {
   }
 
   shrinkUpdate() {
-    console.log(1);
     const {
       shrink: { minScale, deltaScale },
     } = blockConf;

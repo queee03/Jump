@@ -170,25 +170,14 @@ class Bottle {
   reboundUpdate() {
     const {
       initScale,
-      rebound: { headAnimation, bodyAnimation },
+      rebound: { animations, animationType },
     } = bottleConf;
     this.scale = initScale;
-    customAnimation.to(
-      this.head.position,
-      {
-        ...this.head.position,
-        ...headAnimation.to,
-      },
-      headAnimation.duration
-    );
-    customAnimation.to(
-      this.body.scale,
-      {
-        ...this.body.scale,
-        ...bodyAnimation.to,
-      },
-      bodyAnimation.duration
-    );
+    animations.forEach((item) => {
+      const { unit, attribute, to, duration } = item;
+      const form = this[unit][attribute];
+      customAnimation.to(form, { ...form, ...to }, duration, animationType);
+    });
   }
 
   setDirection(direction: DirectionEnum, axis: AxisEnum) {
@@ -202,21 +191,21 @@ class Bottle {
     } = bottleConf;
     this.bottle.rotation.x = this.bottle.rotation.z = 0;
     if (this.direction === 0) {
-      animations.forEach((item) => {
-        const { x, y, z } = item;
-        const rotation = this.bottle.rotation;
-        customAnimation.to(
-          rotation,
-          {
-            x: x ? rotation.x + x : rotation.x,
-            y: y ? rotation.y + y : rotation.y,
-            z: z ? rotation.z + z : rotation.z,
-          },
-          item.duration,
-          animationType,
-          item.delay
-        );
-      });
+      // animations.forEach((item) => {
+      //   const { x, y, z } = item;
+      //   const rotation = this.bottle.rotation;
+      //   customAnimation.to(
+      //     rotation,
+      //     {
+      //       x: x ? rotation.x + x : rotation.x,
+      //       y: y ? rotation.y + y : rotation.y,
+      //       z: z ? rotation.z + z : rotation.z,
+      //     },
+      //     item.duration,
+      //     animationType,
+      //     item.delay
+      //   );
+      // });
     }
   }
 }
