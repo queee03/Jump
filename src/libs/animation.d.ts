@@ -15,6 +15,19 @@ declare namespace AnimationTypes {
     delay?: number
   ) => void;
 
+  type TosProps = {
+    from: PositionType;
+    // unit?: string;
+    // attribute?: string;
+    to?: Partial<PositionType>;
+    go?: Partial<PositionType>;
+    duration?: number;
+    type?: EasingEnum;
+    delay?: number;
+  }[];
+
+  type TosType = (arr: TosProps) => void;
+
   type TweenAnimationType = (
     from: number,
     to: number,
@@ -25,5 +38,6 @@ declare namespace AnimationTypes {
 
   type CustomAnimationType = {
     to: ToType;
+    tos: TosType;
   };
 }

@@ -28,7 +28,28 @@ const to: A.ToType = function (from, to, duration, type, delay) {
     delay ? delay * 1000 : 0
   );
 };
-const customAnimation: A.CustomAnimationType = { to };
+
+const tos: A.TosType = function (arr) {
+  arr.forEach((item) => {
+    const { from, to, go, duration, type, delay } = item;
+    let tos = { ...from };
+    if (to) {
+      tos = {
+        ...from,
+        ...to,
+      };
+    } else if (go) {
+      tos = {
+        x: (from.x += go.x || 0),
+        y: (from.y += go.y || 0),
+        z: (from.z += go.z || 0),
+      };
+    }
+    customAnimation.to(from, tos, duration, type, delay);
+  });
+};
+
+const customAnimation: A.CustomAnimationType = { to, tos };
 
 export const TweenAnimation: A.TweenAnimationType = function (
   from,

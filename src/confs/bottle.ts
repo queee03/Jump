@@ -7,7 +7,7 @@ import bottomImg from "@/assets/images/bottom.png";
 
 export type DirectionEnum = 0 | 1; // 0:延x轴跳跃 1:y
 export type AxisEnum = "x" | "y" | "z" | undefined;
-export type StatusEnum = "stop" | "shrink";
+export type StatusEnum = "stop" | "shrink" | "jump";
 
 const castShadow = true;
 const initScale = 1;
@@ -126,27 +126,6 @@ export default {
         },
       },
     ],
-    headAnimation: {
-      duration: 0.15,
-      to: {
-        x: 0,
-        y: initHeadPositionY,
-      },
-    },
-    bodyAnimation: {
-      duration: 0.3,
-      to: {
-        x: initScale,
-        y: initScale,
-        z: initScale,
-      },
-    },
-    objectAnimation: {
-      duration: 0.15,
-      to: {
-        y: initPositionY,
-      },
-    },
   },
   rotate: {
     animationType: <const>"Linear",

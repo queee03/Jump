@@ -13,6 +13,8 @@ class Bottle {
   scale: number = bottleConf.initScale;
   direction: DirectionEnum = 0;
   axis: AxisEnum;
+  lastFrameTime = Date.now();
+  flyingTime = 0;
   static specularMaterial: Three.MeshPhongMaterial;
   static middleMaterial: Three.MeshPhongMaterial;
   static bottomMaterial: Three.MeshPhongMaterial;
@@ -119,14 +121,19 @@ class Bottle {
   }
 
   update() {
-    // console.log(this.status);
     const {
       head: { rotateRate },
     } = bottleConf;
-    this.head.rotation.y += rotateRate;
+
     if (this.status === "shrink") {
       this.shrinkUpdate();
+    } else if (this.status === "jump") {
+      const tickTime = Date.now() - this.lastFrameTime;
+      this.jumpUpdate(tickTime);
     }
+
+    this.head.rotation.y += rotateRate;
+    this.lastFrameTime = Date.now();
   }
 
   showup() {
@@ -142,11 +149,6 @@ class Bottle {
   shrink() {
     // console.log("shrink");
     this.status = "shrink";
-  }
-
-  rebound() {
-    this.status = "stop";
-    this.reboundUpdate();
   }
 
   shrinkUpdate() {
@@ -167,17 +169,31 @@ class Bottle {
     this.obj.position.y -= deltaY; // block向下压缩，小人也要跟着往下掉
   }
 
+  rebound() {
+    this.status = "stop";
+    this.reboundUpdate();
+  }
+
   reboundUpdate() {
     const {
       initScale,
       rebound: { animations, animationType },
     } = bottleConf;
     this.scale = initScale;
-    animations.forEach((item) => {
-      const { unit, attribute, to, duration } = item;
-      const form = this[unit][attribute];
-      customAnimation.to(form, { ...form, ...to }, duration, animationType);
+    const arr = animations.map((item) => {
+      const { unit, attribute, ...props } = item;
+      const from = this[unit][attribute];
+      return { from, type: animationType, ...props };
     });
+    customAnimation.tos(arr);
+  }
+
+  jump() {
+    this.status = "jump";
+  }
+
+  jumpUpdate(tickTime: number) {
+    this.flyingTime += tickTime;
   }
 
   setDirection(direction: DirectionEnum, axis: AxisEnum) {
