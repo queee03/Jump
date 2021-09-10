@@ -7,15 +7,15 @@ import T = TweenTypes;
     注意，from 和 range不会随动画进行而改变，是固定的
 */
 const linear: T.TweenFunctionType = function (
-  currentFrame,
-  from,
-  range,
-  totalFrameCount
+  currentFrame, // t
+  from, // b
+  range, // c
+  totalFrameCount // d
 ) {
   return from + (range * currentFrame) / totalFrameCount;
 };
 
-const BounceEaseOut: T.TweenFunctionType = function (t, b, c, d) {
+const bounceEaseOut: T.TweenFunctionType = function (t, b, c, d) {
   if ((t /= d) < 1 / 2.75) {
     return c * (7.5625 * t * t) + b;
   } else if (t < 2 / 2.75) {
@@ -29,7 +29,7 @@ const BounceEaseOut: T.TweenFunctionType = function (t, b, c, d) {
 
 const Tween: T.TweenType = {
   Linear: linear,
-  BounceEaseOut: BounceEaseOut,
+  BounceEaseOut: bounceEaseOut,
 };
 
 export default Tween;

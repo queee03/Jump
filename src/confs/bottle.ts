@@ -1,3 +1,4 @@
+import * as Three from "three";
 import blockConf from "./block";
 
 import headImg from "@/assets/images/head.png";
@@ -7,7 +8,12 @@ import bottomImg from "@/assets/images/bottom.png";
 
 export type DirectionEnum = 0 | 1; // 0:延x轴跳跃 1:y
 export type AxisEnum = "x" | "y" | "z" | undefined;
+export type AxisType = Three.Vector3;
 export type StatusEnum = "stop" | "shrink" | "jump";
+export type velocityType = {
+  vx: number; // x轴初速度
+  vy: number; // y轴初速度
+};
 
 const castShadow = true;
 const initScale = 1;

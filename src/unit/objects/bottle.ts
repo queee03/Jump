@@ -1,8 +1,14 @@
 import * as Three from "three";
 import customAnimation from "@/libs/animation";
+import { verticalThrowUp } from "@/libs/untls";
 import blockConf from "@/confs/block";
 import bottleConf from "@/confs/bottle";
-import type { DirectionEnum, AxisEnum, StatusEnum } from "@/confs/bottle";
+import type {
+  DirectionEnum,
+  AxisType,
+  StatusEnum,
+  velocityType,
+} from "@/confs/bottle";
 
 class Bottle {
   obj: Three.Object3D;
@@ -12,14 +18,16 @@ class Bottle {
   status: StatusEnum = bottleConf.initStatus;
   scale: number = bottleConf.initScale;
   direction: DirectionEnum = 0;
-  axis: AxisEnum;
+  axis: Three.Vector3;
   lastFrameTime = Date.now();
-  flyingTime = 0;
+  flyingTime = 0; // 已飞行的总时间
+  velocity: velocityType = { vx: 0, vy: 0 };
   static specularMaterial: Three.MeshPhongMaterial;
   static middleMaterial: Three.MeshPhongMaterial;
   static bottomMaterial: Three.MeshPhongMaterial;
 
   constructor() {
+    this.axis = new Three.Vector3();
     this.obj = new Three.Object3D();
     this.bottle = new Three.Object3D();
     this.head = new Three.Object3D();
@@ -169,8 +177,9 @@ class Bottle {
     this.obj.position.y -= deltaY; // block向下压缩，小人也要跟着往下掉
   }
 
-  rebound() {
+  stop() {
     this.status = "stop";
+    this.flyingTime = 0;
     this.reboundUpdate();
   }
 
@@ -193,10 +202,15 @@ class Bottle {
   }
 
   jumpUpdate(tickTime: number) {
-    this.flyingTime += tickTime;
+    const t = tickTime / 1000;
+    this.flyingTime += t;
+    const translateH = this.velocity.vx * t; // 水平位移距离 但是不一定沿着X轴
+    const translateY = verticalThrowUp(this.velocity.vy, t);
+    this.obj.translateY(translateY);
+    this.obj.translateOnAxis(this.axis, translateH);
   }
 
-  setDirection(direction: DirectionEnum, axis: AxisEnum) {
+  setDirection(direction: DirectionEnum, axis: AxisType) {
     this.direction = direction;
     this.axis = axis;
   }
