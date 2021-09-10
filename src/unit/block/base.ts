@@ -46,11 +46,6 @@ class BaseBlock {
     this.status = "shrink";
   }
 
-  rebound() {
-    this.status = "stop";
-    this.reboundUpdate();
-  }
-
   shrinkUpdate() {
     const {
       shrink: { minScale, deltaScale },
@@ -63,7 +58,12 @@ class BaseBlock {
     this.instance.scale.y = this.scale;
   }
 
-  reboundUpdate() {
+  stop() {
+    this.status = "stop";
+    this.rebound();
+  }
+
+  rebound() {
     const {
       initScale,
       rebound: { animation },

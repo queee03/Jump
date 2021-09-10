@@ -5,7 +5,10 @@ import Bottle from "@/unit/objects/bottle";
 import BaseBlock from "@/unit/block/base";
 import Cuboid from "@/unit/block/cuboid";
 import Cylinder from "@/unit/block/cylinder";
+
 import blockConf from "@/confs/block";
+import gameConf from "@/confs/game";
+import type { DirectionEnum } from "@/confs/game";
 
 function Page() {
   const ref = useRef<HTMLDivElement>(null);
@@ -16,7 +19,14 @@ function Page() {
   const scene = new Scene();
   const renderer = scene.renderer;
   const bottle = new Bottle();
+  let targetPosition = { x: 0, y: 0, z: 0 };
   let currentBlock: BaseBlock;
+  let touchStartTime = 0;
+  let touchEndTime = 0;
+
+  const setDirection = (direction: DirectionEnum) => {
+    bottle.setDirection(direction, targetPosition);
+  };
 
   const addGround = () => {
     const ground = new Ground();
@@ -27,13 +37,24 @@ function Page() {
 
   const addInitBlock = () => {
     const { initPosition } = blockConf;
+    const { initDirection } = gameConf;
     const cuboidBlock = new Cuboid(
       initPosition.x,
       initPosition.y,
       initPosition.z
     );
-    const cylinderBlock = new Cylinder(23, 0, 0);
+
+    const secondPosition = { x: 23, y: 0, z: 0 };
+    const cylinderBlock = new Cylinder(
+      secondPosition.x,
+      secondPosition.y,
+      secondPosition.z
+    );
     currentBlock = cuboidBlock;
+
+    targetPosition = { ...secondPosition };
+    setDirection(initDirection);
+
     scene.instance.add(cuboidBlock.instance);
     scene.instance.add(cylinderBlock.instance);
   };
@@ -45,7 +66,7 @@ function Page() {
   };
 
   const updateBlock = () => {
-    currentBlock?.update();
+    currentBlock.update();
   };
 
   const updateBottle = () => {
@@ -61,22 +82,30 @@ function Page() {
 
   const handleTouchStart = () => {
     console.log("onTouchStart");
-    bottle?.shrink();
-    currentBlock?.shrink();
+
+    touchStartTime = Date.now();
+    bottle.shrink();
+    currentBlock.shrink();
   };
 
   const handleTouchEnd = () => {
     console.log("onTouchEnd");
-    bottle?.stop();
-    currentBlock?.rebound();
-    bottle?.rotate();
+
+    touchEndTime = Date.now();
+    const duration = touchEndTime - touchStartTime;
+
+    bottle.stop();
+    currentBlock.stop();
+    bottle.setVelocity(duration);
+    bottle.jump();
+    bottle.rotate();
   };
 
   useEffect(() => {
     if (ref.current) ref.current.appendChild(renderer.domElement);
     addGround();
-    addInitBlock();
     addBottle();
+    addInitBlock();
     animate();
   }, []);
 

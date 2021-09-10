@@ -15,18 +15,17 @@ const fps = 60;
 const frameInterval = 1000 / fps; // 帧间隔时间ms 对于人眼已经够用
 
 const to: A.ToType = function (from, to, duration, type, delay) {
-  setTimeout(
-    () => {
-      const keys = ["x", "y", "z"];
-      keys.forEach((key) => {
-        const prop = <A.PositionKeyEnum>key;
-        TweenAnimation(from[prop], to[prop], duration, type, (value) => {
-          if (value || value === 0) from[prop] = value;
-        });
+  const animate = () => {
+    const keys = ["x", "y", "z"];
+    keys.forEach((key) => {
+      const prop = <A.PositionKeyEnum>key;
+      TweenAnimation(from[prop], to[prop], duration, type, (value) => {
+        if (value || value === 0) from[prop] = value;
       });
-    },
-    delay ? delay * 1000 : 0
-  );
+    });
+  };
+  setTimeout(animate, delay ? delay * 1000 : 0);
+  // animate();
 };
 
 const tos: A.TosType = function (arr) {
@@ -40,9 +39,9 @@ const tos: A.TosType = function (arr) {
       };
     } else if (go) {
       tos = {
-        x: (from.x += go.x || 0),
-        y: (from.y += go.y || 0),
-        z: (from.z += go.z || 0),
+        x: from.x + (go.x || 0),
+        y: from.y + (go.y || 0),
+        z: from.z + (go.z || 0),
       };
     }
     customAnimation.to(from, tos, duration, type, delay);

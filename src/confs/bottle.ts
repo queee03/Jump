@@ -1,4 +1,3 @@
-import * as Three from "three";
 import blockConf from "./block";
 
 import headImg from "@/assets/images/head.png";
@@ -6,9 +5,6 @@ import headImg from "@/assets/images/head.png";
 import middleImg from "@/assets/images/top.png";
 import bottomImg from "@/assets/images/bottom.png";
 
-export type DirectionEnum = 0 | 1; // 0:延x轴跳跃 1:y
-export type AxisEnum = "x" | "y" | "z" | undefined;
-export type AxisType = Three.Vector3;
 export type StatusEnum = "stop" | "shrink" | "jump";
 export type velocityType = {
   vx: number; // x轴初速度
@@ -123,30 +119,59 @@ export default {
           z: initScale,
         },
       },
-      {
-        unit: <const>"obj",
-        attribute: <const>"position",
-        duration: 0.3,
-        to: {
-          y: horizon + startPositionY,
-        },
-      },
+      // {
+      //   unit: <const>"obj",
+      //   attribute: <const>"position",
+      //   duration: 0.3,
+      //   to: {
+      //     y: horizon + startPositionY,
+      //   },
+      // },
     ],
   },
   rotate: {
     animationType: <const>"Linear",
-    animations: [
+    animations0: [
       {
         duration: 0.14,
-        x: 0,
-        y: 0,
-        z: -Math.PI,
+        go: {
+          z: -Math.PI,
+        },
       },
       {
         duration: 0.18,
         delay: 0.14,
-        z: -Math.PI * 2,
+        go: {
+          z: -Math.PI * 2,
+        },
       },
     ],
+    animations1: [
+      {
+        duration: 0.14,
+        go: {
+          x: -Math.PI,
+        },
+      },
+      {
+        duration: 0.18,
+        delay: 0.14,
+        go: {
+          x: -Math.PI * 2,
+        },
+      },
+    ],
+  },
+  velocity: {
+    vx: {
+      ratio: 1 / 6,
+      min: 0,
+      max: 400,
+    },
+    vy: {
+      ratio: 1 / 20,
+      min: 150,
+      max: 400,
+    },
   },
 };
