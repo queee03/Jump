@@ -183,7 +183,6 @@ class Bottle {
 
   rebound() {
     const {
-      initScale,
       rebound: { animations, animationType },
     } = bottleConf;
     const arr = animations.map((item) => {
@@ -192,30 +191,6 @@ class Bottle {
       return { from, type: animationType, ...props };
     });
     customAnimation.tos(arr);
-    // customAnimation.to(
-    //   this.head.position,
-    //   {
-    //     ...this.head.position,
-    //     ...animations[0].to,
-    //   },
-    //   0.3
-    // );
-    // customAnimation.to(
-    //   this.body.scale,
-    //   {
-    //     ...this.body.scale,
-    //     ...animations[1].to,
-    //   },
-    //   0.3
-    // );
-    // customAnimation.to(
-    //   this.obj.position,
-    //   {
-    //     ...this.obj.position,
-    //     ...animations[2].to,
-    //   },
-    //   0.3
-    // );
   }
 
   setDirection(direction: DirectionEnum, targetPosition: PositionType) {
